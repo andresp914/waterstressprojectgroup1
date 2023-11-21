@@ -44,8 +44,3 @@ save(list = df.names,
 #   ExcelFileName = "data/xls/raw-data.xlsx",
 #   AdjWidth = TRUE, BoldHeaderRow = TRUE,
 #   FreezeRow = 1)
-
-### Clean environment ----------------------------
-rm(list = ls())
-
-

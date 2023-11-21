@@ -19,14 +19,17 @@ authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 
 8. Conclusions.
 
-ss \<- "https://docs.google.com/spreadsheets/d/1g9tCISwgck8Icx6BKGNvlS5HdUq5kIL2ATZTr37-\_-k/edit#gid=0" data2023 \<- gsheet2tbl(ss)
-
 
 ```{r}
+load("data/bound-data.Rdata")
 
-variable1 <- filter(data2023,Group=="G1")
-variable2 <- select(variable1,Week,Species,Treatment,Soil_humidity)
+install.packages(dplyr)
+library(dplyr)
+install.packages(tidyr)
+library(tidyr)
 
-plot(variable2)
+variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
+
+plot(variable1)
 ```
 
