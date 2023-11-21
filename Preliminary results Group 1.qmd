@@ -19,7 +19,7 @@ authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 7.  Discussion. From your objectives.
 
 8.  Conclusions.
-gxz667z
+
 ```{r}
 load("data/bound-data.Rdata")
 
