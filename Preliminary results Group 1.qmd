@@ -1,0 +1,32 @@
+---
+title: "Water Stress Group 1"
+format: html
+authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
+---
+1. Title.
+
+2. Team members names. Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
+
+3. Introduction. Why your project is interesting? and What is known already about it? Most citations should be done in the introduction.
+
+4. Objectives and hypotheses.
+
+5. Methods. Explain the origin and structure of your data. What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
+
+6. Results. Figures and tables with captions and description of what do they mean. Never include citations in this part. This is only your work.
+
+7. Discussion. From your objectives.
+
+8. Conclusions.
+
+ss \<- "https://docs.google.com/spreadsheets/d/1g9tCISwgck8Icx6BKGNvlS5HdUq5kIL2ATZTr37-\_-k/edit#gid=0" data2023 \<- gsheet2tbl(ss)
+
+
+```{r}
+
+variable1 <- filter(data2023,Group=="G1")
+variable2 <- select(variable1,Week,Species,Treatment,Soil_humidity)
+
+plot(variable2)
+```
+
