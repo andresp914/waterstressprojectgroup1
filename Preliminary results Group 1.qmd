@@ -3,22 +3,22 @@ title: "Water Stress Group 1"
 format: html
 authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 ---
-1. Title.
 
-2. Team members names. Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
+1.  Title.
 
-3. Introduction. Why your project is interesting? and What is known already about it? Most citations should be done in the introduction.
+2.  Team members names. Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 
-4. Objectives and hypotheses.
+3.  Introduction. Why your project is interesting? and What is known already about it? Most citations should be done in the introduction.
 
-5. Methods. Explain the origin and structure of your data. What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
+4.  Objectives and hypotheses.
 
-6. Results. Figures and tables with captions and description of what do they mean. Never include citations in this part. This is only your work.
+5.  Methods. Explain the origin and structure of your data. What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
 
-7. Discussion. From your objectives.
+6.  Results. Figures and tables with captions and description of what do they mean. Never include citations in this part. This is only your work.
 
-8. Conclusions.
+7.  Discussion. From your objectives.
 
+8.  Conclusions.
 
 ```{r}
 load("data/bound-data.Rdata")
@@ -32,4 +32,3 @@ variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
 
 plot(variable1)
 ```
-
