@@ -29,6 +29,8 @@ install.packages("tidyr")
 library(tidyr)
 
 variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
-
-plot(variable1)
+for i in variable1$Week(
+  "W1"=1
+)
+plot(variable1$Week,variable1$Soil_humidity,type="l")
 ```
