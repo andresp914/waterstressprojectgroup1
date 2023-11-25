@@ -23,9 +23,9 @@ authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 ```{r}
 load("data/bound-data.Rdata")
 
-install.packages(dplyr)
+install.packages("dplyr")
 library(dplyr)
-install.packages(tidyr)
+install.packages("tidyr")
 library(tidyr)
 
 variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
