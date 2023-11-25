@@ -28,10 +28,15 @@ library(dplyr)
 install.packages("tidyr")
 library(tidyr)
 
-#variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
-#for i in variable1$Week(
- # "W1"=1
-#)
+WeekNumber <- c(1,2,3,4,5,6)
+for i in variable1$Week(
+  if (i="W1")
+    
+    
+)
+  
+  
+  
 my_vector = c(1,2,3,4,5)
 for (i in variable1$Week){
   if (i %% W)
