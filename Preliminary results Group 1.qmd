@@ -28,9 +28,15 @@ library(dplyr)
 install.packages("tidyr")
 library(tidyr)
 
-variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
-for i in variable1$Week(
-  "W1"=1
-)
+#variable1 <- select(datab,Week,Species,Treatment,Soil_humidity)
+#for i in variable1$Week(
+ # "W1"=1
+#)
+my_vector = c(1,2,3,4,5)
+for (i in variable1$Week){
+  if (i %% W)
+    next
+  my_vector[length(my_vector)+1] = "week2"
+}
 plot(variable1$Week,variable1$Soil_humidity,type="l")
 ```
