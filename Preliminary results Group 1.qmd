@@ -27,21 +27,7 @@ install.packages("dplyr")
 library(dplyr)
 install.packages("tidyr")
 library(tidyr)
+install.packages("ggplot2",dependencies=TRUE)
+library(ggplot2)
 
-WeekNumber <- c(1,2,3,4,5,6)
-for i in variable1$Week(
-  if (i="W1")
-    
-    
-)
-  
-  
-  
-my_vector = c(1,2,3,4,5)
-for (i in variable1$Week){
-  if (i %% W)
-    next
-  my_vector[length(my_vector)+1] = "week2"
-}
-plot(variable1$Week,variable1$Soil_humidity,type="l")
 ```
