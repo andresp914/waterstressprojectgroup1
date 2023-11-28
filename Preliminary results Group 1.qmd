@@ -41,5 +41,8 @@ datab$Week1 <- as.factor(datab$Week)
 ggplot(datab, aes(x=Week1, y=Plant_height))+
   geom_line()
 
+datab %>%
+  group_by(Species) %>%
+  summarise(Mean_plant_height = mean(Plant_height))
 
 ```
