@@ -23,18 +23,23 @@ authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 ```{r}
 load("data/bound-data.Rdata")
 
-install.packages("dplyr")
+# install.packages("dplyr")
 library(dplyr)
-install.packages("tidyr")
+# install.packages("tidyr")
 library(tidyr)
-install.packages("ggplot2",dependencies=TRUE)
+# install.packages("ggplot2",dependencies=TRUE)
 library(ggplot2)
 
-datab$Week <- factor(datab$Week)
-datab$Week <- as.numeric(as.character(datab$Week))
+# This was to change the Week variable from a character to a 
+# factor, so it can be included in the plot.
 
-ggplot(data2023, aes(x=Date, y=Plant_height))+
-  geom_smooth()+
-  geom_point()
+datab$Week1 <- as.factor(datab$Week)
+
+#This is the plot. It works but now we need to group it per
+# species and per treatment.
+
+ggplot(datab, aes(x=Week1, y=Plant_height))+
+  geom_line()
+
 
 ```
