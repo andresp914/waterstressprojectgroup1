@@ -30,4 +30,11 @@ library(tidyr)
 install.packages("ggplot2",dependencies=TRUE)
 library(ggplot2)
 
+datab$Week <- factor(datab$Week)
+datab$Week <- as.numeric(as.character(datab$Week))
+
+ggplot(data2023, aes(x=Date, y=Plant_height))+
+  geom_smooth()+
+  geom_point()
+
 ```
