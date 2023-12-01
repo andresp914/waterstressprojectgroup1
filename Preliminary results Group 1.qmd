@@ -3,7 +3,7 @@ title: "Water Stress Group 1"
 format: html
 authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
 ---
-
+ 
 1.  Title.
 
 2.  Team members names. Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
@@ -25,24 +25,41 @@ load("data/bound-data.Rdata")
 
 # install.packages("dplyr")
 library(dplyr)
+
 # install.packages("tidyr")
 library(tidyr)
+
 # install.packages("ggplot2",dependencies=TRUE)
 library(ggplot2)
 
-# This was to change the Week variable from a character to a 
+# This was to change the Week variable from a character to a
+
 # factor, so it can be included in the plot.
 
 datab$Week1 <- as.factor(datab$Week)
 
 #This is the plot. It works but now we need to group it per
+
 # species and per treatment.
 
-ggplot(datab, aes(x=Week1, y=Plant_height))+
-  geom_line()
+datab$Species[datab$Species=="Amaranthus retroflexus"] <- "Amaranthus retroflexus"
 
-datab %>%
-  group_by(Species) %>%
+ 
+mean_species <- datab %>%
+  filter(Species == "Lolium rigidum")
+
+mean_species <- mean_species %>%
+  group_by(Species, Treatment, Week) %>%
   summarise(Mean_plant_height = mean(Plant_height))
+
+ggplot(mean_species, aes(x=Week, y=Mean_plant_height, color=Treatment, group = Treatment))+
+  geom_line()+
+  geom_point()+
+  theme_bw()
+
+ 
+
+ 
+#for loop, child
 
 ```
