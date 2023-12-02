@@ -60,25 +60,6 @@ labs(title = "Mean Soil Humidity Over Weeks",
   theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
 ```
 
-Leaf_length
-
-```{r}
-# Group by Species, Treatment, and Week and calculate mean plant height
-meanllength_byweeks <- datab %>%
-  group_by(Species, Treatment, Week) %>%
-  summarise(Mean_leaf_length = mean(Leaf_length))
-
-# Create a ggplot with facets for each species
-ggplot(meanllength_byweeks, aes(x = Week, y = Mean_leaf_length, color = Treatment, group = Treatment)) +
-  geom_point() +
-  geom_line() +
-  theme_bw() +
-  facet_wrap(~Species, scales = "free_y")+
-  labs(title = "Mean Leaf Length Over Weeks",
-       x = "Week",
-       y = "Mean Leaf Length") +
-  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))# Facet by Species with free y-axis scales
-```
 Leaf_number
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean leaf number
