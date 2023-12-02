@@ -1,65 +1,104 @@
 ---
-title: "Water Stress Group 1"
+title: "Variables over time per species"
 format: html
-authors: Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
+editor: visual
 ---
- 
-1.  Title.
-
-2.  Team members names. Chidimma Akabuogu, Paul Bosse, Javier Rojas, Andrés Pascagaza
-
-3.  Introduction. Why your project is interesting? and What is known already about it? Most citations should be done in the introduction.
-
-4.  Objectives and hypotheses.
-
-5.  Methods. Explain the origin and structure of your data. What have you done? And what did you use to do it? Step by step, so anyone could do it again by reading this part.
-
-6.  Results. Figures and tables with captions and description of what do they mean. Never include citations in this part. This is only your work.
-
-7.  Discussion. From your objectives.
-
-8.  Conclusions.
 
 ```{r}
+# Load the data
 load("data/bound-data.Rdata")
 
-# install.packages("dplyr")
+# Load necessary libraries
 library(dplyr)
-
-# install.packages("tidyr")
-library(tidyr)
-
-# install.packages("ggplot2",dependencies=TRUE)
 library(ggplot2)
 
-# This was to change the Week variable from a character to a
-
-# factor, so it can be included in the plot.
-
+# Convert Week to a factor
 datab$Week1 <- as.factor(datab$Week)
 
-#This is the plot. It works but now we need to group it per
+datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflexus" 
+```
 
-# species and per treatment.
+Plant height
 
-datab$Species[datab$Species=="Amaranthus retroflexus"] <- "Amaranthus retroflexus"
-
- 
-mean_species <- datab %>%
-  filter(Species == "Lolium rigidum")
-
-mean_species <- mean_species %>%
+```{r}
+# Group by Species, Treatment, and Week and calculate mean plant height
+meanheight_byweeks <- datab %>%
   group_by(Species, Treatment, Week) %>%
   summarise(Mean_plant_height = mean(Plant_height))
 
-ggplot(mean_species, aes(x=Week, y=Mean_plant_height, color=Treatment, group = Treatment))+
-  geom_line()+
-  geom_point()+
-  theme_bw()
-
- 
-
- 
-#for loop, child
+# Create a ggplot with facets for each species
+ggplot(meanheight_byweeks, aes(x = Week, y = Mean_plant_height, color = Treatment, group = Treatment)) +
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  facet_wrap(~Species, scales = "free_y")+
+labs(title = "Mean Plant Height Over Weeks",
+       x = "Week",
+       y = "Mean Plant Height") +
+  theme(legend.position = "top", legend.box.background = element_rect(colour = "black")) # Facet by Species with free y-axis scales
 
 ```
+
+Soil humidity
+
+```{r}
+# Group by Species, Treatment, and Week and calculate mean soil humidity
+meanhumidity_byweeks <- datab %>%
+  group_by(Species, Treatment, Week) %>%
+  summarise(Mean_soil_humidity = mean(Soil_humidity))
+
+# Create a ggplot with facets for each species
+ggplot(meanhumidity_byweeks, aes(x = Week, y = Mean_soil_humidity, color = Treatment, group = Treatment)) +
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
+labs(title = "Mean Soil Humidity Over Weeks",
+       x = "Week",
+       y = "Mean Soil Humidity") +
+  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
+```
+
+Leaf_length
+
+```{r}
+# Group by Species, Treatment, and Week and calculate mean plant height
+meanllength_byweeks <- datab %>%
+  group_by(Species, Treatment, Week) %>%
+  summarise(Mean_leaf_length = mean(Leaf_length))
+
+# Create a ggplot with facets for each species
+ggplot(meanllength_byweeks, aes(x = Week, y = Mean_leaf_length, color = Treatment, group = Treatment)) +
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  facet_wrap(~Species, scales = "free_y")+
+  labs(title = "Mean Leaf Length Over Weeks",
+       x = "Week",
+       y = "Mean Leaf Length") +
+  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))# Facet by Species with free y-axis scales
+```
+Statistical analysis
+```{r}
+library(agricolae)
+
+datab$Soil_humidity <- as.numeric(datab$Soil_humidity)
+
+st.sh <- datab %>%
+  filter(!is.na(Soil_humidity)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Soil.Humidity = mean(Soil_humidity),
+            Median.Soil.Humidity = median(Soil_humidity),
+            Variance.Soil.Humidity = var(Soil_humidity),
+            Standard.Deviation.Soil.Humidity = sd(Soil_humidity))
+
+datab <- tidyr::separate(datab,PlantId, c("sptr"), sep=3)
+
+an <- aov(formula = datab$Plant_height ~ datab$sptr)
+an
+hsd <- TukeyHSD(an)
+hsd
+```
+
+```
+

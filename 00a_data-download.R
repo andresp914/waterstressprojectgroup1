@@ -2,7 +2,7 @@
 # 231116 Alfonso Garmendia algarsal(at)upv(dot)es
 ##################################################
 library(gsheet)
-library(WriteXLS)
+library(writexl)
 
 ### Data 2022 ------------------------------------
 ss <- "docs.google.com/spreadsheets/d/1WM6hDgwCFxbLpT37HLzU-iYZAEGBdHP6CpU8BDwWmZc/"
@@ -33,14 +33,31 @@ if (!dir.exists('data/raw'))
 if (!dir.exists('data/xls')) 
   dir.create('data/xls')  
 
-### Save as rdata 
+### Save as rdata --------------------------------
 df.names <- ls(pattern = "20") 
 
 save(list = df.names, 
   file = "data/raw/raw-data.Rdata")
 
-### Save as Excel
-# WriteXLS(df.names, 
-#   ExcelFileName = "data/xls/raw-data.xlsx",
-#   AdjWidth = TRUE, BoldHeaderRow = TRUE,
-#   FreezeRow = 1)
+#### Save as Excel with WriteXLS -----------------
+### Better format but it needs Perl installed.
+#   library(WriteXLS)
+# if (testPerl()) {
+#   WriteXLS(df.names,
+#     ExcelFileName = "data/xls/raw-data.xlsx",
+#     AdjWidth = TRUE, BoldHeaderRow = TRUE,
+#     FreezeRow = 1)
+# }
+
+### Save as Excel with writexl -------------------
+### No Perl needed. Less formatting options.
+df.ls <- lapply(df.names, 
+  FUN = function(x) get(x))
+names(df.ls) <- df.names
+writexl::write_xlsx(df.ls, 
+  path = "data/xls/raw-data2.xlsx")
+
+### Clean environment ----------------------------
+# rm(list = ls())
+
+

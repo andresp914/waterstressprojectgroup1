@@ -1,7 +1,7 @@
 ############## Bind raw data ####################-
 # 231116 Alfonso Garmendia algarsal(at)upv(dot)es
 ##################################################
-library(WriteXLS)
+library(writexl)
 
 ## Raw data --------------------------------------
 # dir()
@@ -23,7 +23,7 @@ if (length(data2023$Group) > 0)
 
 ### Join data frames -----------------------------
 dl <- ls(pattern = "data")
-datab <- rbind(get(dl[1]), get(dl[2]))
+datab <- rbind(get(dl[2]), get(dl[1]))
 
 ### Join legends ---------------------------------
 legendb <- legend2023
@@ -66,8 +66,23 @@ df.names <- c("datab", "datesb", "legendb")
 save(list = df.names, 
   file = "data/bound-data.Rdata")
 
-### Save as Excel
-# WriteXLS(df.names, 
-#   ExcelFileName = "data/xls/bound-data.xlsx",
-#   AdjWidth = TRUE, BoldHeaderRow = TRUE,
-#   FreezeRow = 1)
+#### Save as Excel with WriteXLS -----------------
+### Better format but it needs Perl installed.
+#   library(WriteXLS)
+# if (testPerl()) {
+#   WriteXLS(df.names,
+#     ExcelFileName = "data/xls/bound-data.xlsx",
+#     AdjWidth = TRUE, BoldHeaderRow = TRUE,
+#     FreezeRow = 1)
+# }
+
+### Save as Excel with writexl -------------------
+### No Perl needed. Less formatting options.
+df.ls <- lapply(df.names, 
+  FUN = function(x) get(x))
+names(df.ls) <- df.names
+writexl::write_xlsx(df.ls, 
+  path = "data/xls/bound-data2.xlsx")
+
+### Clean environment ----------------------------
+# rm(list = ls())

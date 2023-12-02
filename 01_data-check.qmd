@@ -33,9 +33,8 @@ library(knitr)
 
 ```{r download, eval=!dir.exists("data")}
 # dir()
-
-source("00a_data-download.R")
-source("00b_data-bind.R")
+# source("00a_data-download.R")
+# source("00b_data-bind.R")
 
 ```
 
@@ -132,7 +131,3 @@ year <- "bound table"
 
 {{< include rmd/_reproducibility.qmd >}}
 
-
-```{r}
-knit_exit()
-```
