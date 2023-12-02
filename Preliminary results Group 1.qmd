@@ -14,7 +14,7 @@ library(ggplot2)
 
 # Convert Week to a factor
 datab$Week1 <- as.factor(datab$Week)
-
+datab$Soil_humidity <-  as.numeric(datab$Soil_humidity)
 datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflexus" 
 ```
 
@@ -44,6 +44,7 @@ Soil humidity
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean soil humidity
 meanhumidity_byweeks <- datab %>%
+    filter(!is.na(Soil_humidity)) %>%
   group_by(Species, Treatment, Week) %>%
   summarise(Mean_soil_humidity = mean(Soil_humidity))
 
@@ -78,7 +79,50 @@ ggplot(meanllength_byweeks, aes(x = Week, y = Mean_leaf_length, color = Treatmen
        y = "Mean Leaf Length") +
   theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))# Facet by Species with free y-axis scales
 ```
+Leaf_number
+```{r}
+# Group by Species, Treatment, and Week and calculate mean leaf number
+meanleafnumber_byweeks <- datab %>%
+  filter(!is.na(Leaf_number)) %>%
+  group_by(Species, Treatment, Week) %>%
+  summarise(Mean_leaf_number = mean(Leaf_number))
+
+# Create a ggplot with facets for each species
+ggplot(meanleafnumber_byweeks, aes(x = Week, y = Mean_leaf_number, color = Treatment, group = Treatment)) +
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
+labs(title = "Mean Leaf Number Over Weeks",
+       x = "Week",
+       y = "Mean Leaf Number") +
+  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
+```
+Chlorophyll_content
+```{r}
+# Group by Species, Treatment, and Week and calculate mean leaf number
+meanchlorophyll_byweeks <- datab %>%
+  filter(!is.na(Chlorophyll_content)) %>%
+  group_by(Species, Treatment, Week) %>%
+  summarise(Mean_Chlorophyll = mean(Chlorophyll_content))
+
+# Create a ggplot with facets for each species
+ggplot(meanchlorophyll_byweeks, aes(x = Week, y = Mean_Chlorophyll, color = Treatment, group = Treatment)) +
+  geom_point() +
+  geom_line() +
+  theme_bw() +
+  facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
+labs(title = "Mean Chlorophyll Content Over Weeks",
+       x = "Week",
+       y = "Mean Chlorophyll Content") +
+  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
+```
+
+
+
+
 Statistical analysis
+
 ```{r}
 library(agricolae)
 
@@ -100,5 +144,4 @@ hsd <- TukeyHSD(an)
 hsd
 ```
 
-```
-
+\`\`\`
