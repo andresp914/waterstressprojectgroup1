@@ -48,7 +48,7 @@ meanhumidity_byweeks <- datab %>%
   group_by(Species, Treatment, Week) %>%
   summarise(Mean_soil_humidity = mean(Soil_humidity))
 
-# Create a ggplot with facets for each species
+# Create a ggplot with facets for each species 
 ggplot(meanhumidity_byweeks, aes(x = Week, y = Mean_soil_humidity, color = Treatment, group = Treatment)) +
   geom_point() +
   geom_line() +
@@ -98,25 +98,26 @@ labs(title = "Mean Leaf Number Over Weeks",
        y = "Mean Leaf Number") +
   theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
 ```
-Chlorophyll_content
+
+
+Chlorophyll_content bar
 ```{r}
-# Group by Species, Treatment, and Week and calculate mean 
 meanchlorophyll_byweeks <- datab %>%
   filter(!is.na(Chlorophyll_content)) %>%
   group_by(Species, Treatment, Week) %>%
   summarise(Mean_Chlorophyll = mean(Chlorophyll_content))
+#barplot
 
-# Create a ggplot with facets for each species
-ggplot(meanchlorophyll_byweeks, aes(x = Week, y = Mean_Chlorophyll, color = Treatment, group = Treatment)) +
-  geom_point() +
-  geom_line() +
-  theme_bw() +
-  facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
-labs(title = "Mean Chlorophyll Content Over Weeks",
-       x = "Week",
+ggplot(meanchlorophyll_byweeks, aes(x = Species, y = Mean_Chlorophyll, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
+  labs(title = "Mean Chlorophyll Content by Species and Treatment",
+       x = "Species",
        y = "Mean Chlorophyll Content") +
-  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  scale_fill_brewer(palette="Set1") 
 ```
+
+
 Aerial_fresh_weight #CHANGE GRAPH TYPE MAYBE BAR GRAPH
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean 
