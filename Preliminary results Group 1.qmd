@@ -61,6 +61,7 @@ labs(title = "Mean Soil Humidity Over Weeks",
 ```
 
 Leaf_number
+
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean leaf number
 meanleafnumber_byweeks <- datab %>%
@@ -80,8 +81,8 @@ labs(title = "Mean Leaf Number Over Weeks",
   theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
 ```
 
-
 Chlorophyll_content bar
+
 ```{r}
 meanchlorophyll_byweeks <- datab %>%
   filter(!is.na(Chlorophyll_content)) %>%
@@ -98,8 +99,8 @@ ggplot(meanchlorophyll_byweeks, aes(x = Species, y = Mean_Chlorophyll, fill = Tr
   scale_fill_brewer(palette="Set1") 
 ```
 
-
 Aerial_fresh_weight #CHANGE GRAPH TYPE MAYBE BAR GRAPH
+
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean 
 meanaerialfresh_byweeks <- datab %>%
@@ -120,6 +121,7 @@ ggplot(meanaerialfresh_byweeks, aes(x = Species, y = Mean_Aerialfresh, fill = Tr
 ```
 
 Aerial_dry_weight
+
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean 
 meanaerialdry_byweeks <- datab %>%
@@ -137,7 +139,8 @@ ggplot(meanaerialdry_byweeks, aes(x = Species, y = Mean_Aerialdry, fill = Treatm
   scale_fill_brewer(palette="Set1") 
 ```
 
-Root_length 
+Root_length
+
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean 
 meanroot_lenght <- datab %>%
@@ -156,6 +159,7 @@ ggplot(meanroot_lenght, aes(x = Species, y = Mean_Rootlength, fill = Treatment, 
 ```
 
 Root_fresh_weight
+
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean 
 meanroot_fresh <- datab %>%
@@ -174,6 +178,7 @@ ggplot(meanroot_fresh, aes(x = Species, y = Mean_Rootfresh, fill = Treatment, co
 ```
 
 Root_dry_weight
+
 ```{r}
 # Group by Species, Treatment, and Week and calculate mean 
 meanroot_dry <- datab %>%
@@ -191,8 +196,7 @@ ggplot(meanroot_dry, aes(x = Species, y = Mean_Rootdry, fill = Treatment, colour
   scale_fill_brewer(palette="Set1")
 ```
 
-
-Statistical analysis ADD
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for soil humidity.
 
 ```{r}
 library(agricolae)
@@ -206,13 +210,215 @@ st.sh <- datab %>%
             Median.Soil.Humidity = median(Soil_humidity),
             Variance.Soil.Humidity = var(Soil_humidity),
             Standard.Deviation.Soil.Humidity = sd(Soil_humidity))
+```
 
-datab <- tidyr::separate(datab,PlantId, c("sptr"), sep=3)
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for plant height.
 
-an <- aov(formula = datab$Plant_height ~ datab$sptr)
-an
-hsd <- TukeyHSD(an)
-hsd
+```{r}
+st.ph <- datab %>%
+  filter(!is.na(Plant_height)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Plant.Height = mean(Plant_height),
+            Median.Plant.Height = median(Plant_height),
+            Variance.Plant.Height = var(Plant_height),
+            Standard.Deviation.Plant.Height = sd(Plant_height))
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for leaf number.
+
+```{r}
+st.ln <- datab %>%
+  filter(!is.na(Leaf_number)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Leaf.Number = mean(Leaf_number),
+            Median.Leaf.Number = median(Leaf_number),
+            Variance.Leaf.Number = var(Leaf_number),
+            Standard.Deviation.Leaf.Number = sd(Leaf_number))
+
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for chlorophyll content.
+
+```{r}
+st.cc <- datab %>%
+  filter(!is.na(Chlorophyll_content)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Chlorophyll.Content = mean(Chlorophyll_content),
+            Median.Chlorophyll.Content = median(Chlorophyll_content),
+            Variance.Chlorophyll.Content = var(Chlorophyll_content),
+            Standard.Deviation.Chlorophyll.Content = sd(Chlorophyll_content))
+
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for aerial fresh weight.
+
+```{r}
+st.afw <- datab %>%
+  filter(!is.na(Aerial_fresh_weight)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Aerial.Fresh.Weight = mean(Aerial_fresh_weight),
+            Median.Aerial.Fresh.Weight = median(Aerial_fresh_weight),
+            Variance.Aerial.Fresh.Weight = var(Aerial_fresh_weight),
+            Standard.Deviation.Aerial.Fresh.Weight = sd(Aerial_fresh_weight))
+
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for root length.
+
+```{r}
+st.rl <- datab %>%
+  filter(!is.na(Root_length)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Root.Length = mean(Root_length),
+            Median.Root.Length = median(Root_length),
+            Variance.Root.Length = var(Root_length),
+            Standard.Deviation.Root.Length = sd(Root_length))
+
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for root fresh weight.
+
+```{r}
+st.rfw <- datab %>%
+  filter(!is.na(Roots_fresh_weight)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Roots.Fresh.Weight = mean(Roots_fresh_weight),
+            Median.Roots.Fresh.Weight = median(Roots_fresh_weight),
+            Variance.Roots.Fresh.Weight = var(Roots_fresh_weight),
+            Standard.Deviation.Roots.Fresh.Weight = sd(Roots_fresh_weight))
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for soil humidity.
+
+```{r}
+st.sh <- st.sh %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+ansh <- aov(formula = st.sh$Mean.Soil.Humidity ~ st.sh$SpeciesTreatment)
+ansh
+
+hsdsh <- HSD.test(ansh, trt="st.sh$SpeciesTreatment")
+hsdsh
+
+krsh <- agricolae::kruskal(st.sh$Mean.Soil.Humidity,trt=st.sh$SpeciesTreatment)
+krsh
+
+shsh <- shapiro.test(ansh$residuals)
+shsh
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for plant height.
+
+```{r}
+st.ph <- st.ph %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+anph <- aov(formula = st.ph$Mean.Plant.Height ~ st.ph$SpeciesTreatment)
+anph
+
+hsdph <- HSD.test(anph, trt="st.ph$SpeciesTreatment")
+hsdph
+
+krph <- agricolae::kruskal(st.ph$Mean.Plant.Height,trt=st.ph$SpeciesTreatment)
+krph
+
+shph <- shapiro.test(anph$residuals)
+shph
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for leaf number.
+
+```{r}
+st.ln <- st.ln %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+anln <- aov(formula = st.ln$Mean.Leaf.Number ~ st.ln$SpeciesTreatment)
+anln
+
+hsdln <- HSD.test(anln, trt="st.ln$SpeciesTreatment")
+hsdln
+
+krln <- agricolae::kruskal(st.ln$Mean.Leaf.Number,trt=st.ln$SpeciesTreatment)
+krln
+
+shln <- shapiro.test(anln$residuals)
+shln
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for chlorophyll content.
+
+```{r}
+st.cc <- st.cc %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+ancc <- aov(formula = st.cc$Mean.Chlorophyll.Content ~ st.cc$SpeciesTreatment)
+ancc
+
+hsdcc <- HSD.test(ancc, trt="st.cc$SpeciesTreatment")
+hsdcc
+
+krcc <- agricolae::kruskal(st.cc$Mean.Chlorophyll.Content,trt=st.cc$SpeciesTreatment)
+krcc
+
+shcc <- shapiro.test(ancc$residuals)
+shcc
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for aerial fresh weight.
+
+```{r}
+st.afw <- st.afw %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+anafw <- aov(formula = st.afw$Mean.Aerial.Fresh.Weight ~ st.afw$SpeciesTreatment)
+anafw
+
+hsdafw <- HSD.test(anafw, trt="st.afw$SpeciesTreatment")
+hsdafw
+
+krafw <- agricolae::kruskal(st.afw$Mean.Aerial.Fresh.Weight,trt=st.afw$SpeciesTreatment)
+krafw
+
+shafw <- shapiro.test(anafw$residuals)
+shafw
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for root length.
+
+```{r}
+st.rl <- st.rl %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+anrl <- aov(formula = st.rl$Mean.Root.Length ~ st.rl$SpeciesTreatment)
+anrl
+
+hsdrl <- HSD.test(anrl, trt="st.rl$SpeciesTreatment")
+hsdrl
+
+krrl <- agricolae::kruskal(st.rl$Mean.Root.Length,trt=st.rl$SpeciesTreatment)
+krrl
+
+shrl <- shapiro.test(anrl$residuals)
+shrl
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for root fresh weight.
+
+```{r}
+st.rfw <- st.rfw %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+anrfw <- aov(formula = st.rfw$Mean.Roots.Fresh.Weight ~ st.rfw$SpeciesTreatment)
+anrfw
+
+hsdrfw <- HSD.test(anrfw, trt="st.rfw$SpeciesTreatment")
+hsdrfw
+
+krrfw <- agricolae::kruskal(st.rfw$Mean.Roots.Fresh.Weight,trt=st.rfw$SpeciesTreatment)
+krrfw
+
+shrfw <- shapiro.test(anrfw$residuals)
+shrfw
 ```
 
 \`\`\`
