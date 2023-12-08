@@ -1,16 +1,60 @@
 ---
-title: "Variables over time per species"
+title: "Effect of different water stress levels on morphophysiological variables of 15 crop and weed species."
 format: html
 editor: visual
 ---
 
-```{r}
+**Team members**
+
+Chidimma Akabuogu, Paul Bosse, Andrés Pascagaza and Javier Rojas.
+
+**Introduction**
+
+The global human population recently reached 8 billion people and the latest projections by the United Nations suggest that the world's population could grow to 8.5 billion by 2030 and 9.7 billion by 2050 (1). In a changing climate, environmental change is, therefore, an important factor for agriculture in an attempt to meet the growing need for food worldwide. Unfortunately, the vast majority of land is exposed to stressful conditions (2). Abiotic stress has been identified as one of the key factors threatening global food security. Compared to record yields, abiotic stress can reduce yields by more than 60% on average (3). Throughout their growth and development, crops encounter several abiotic factors or stresses (i.e. drought, flooding, osmotic stress, high temperatures, UV-radiation, nutrient imbalance, etc.) extremely affecting plant growth and development, leading to a reduction of the final yield and ultimately affecting worldwide food security (4).
+
+Water stress has a direct impact on the development of living organisms of ecosystems. Plants rely on water for a proper growth and a lack of it can have a negative impact on agriculture. Drought is linked usually to a temporary lack of available water, and it usually affects arid and semiarid regions with lower precipitation, being some of them of relevance in terms of agricultural production. In case of a reduction in water availability the food productivity can be reduced significantly (5). Water stress can be caused by either natural or anthropogenic factors which include climate, soil salinity, agriculture or population demand. Soil salinity causes water stress in nearly 1 billion ha worldwide (6), by decreasing the osmotic pressure in the soil blocking water uptake by the rhizosphere (7).
+
+As a result of water stress, plants exhibit several changes regarding morphology and physiology such as decline in height, alterations in the root to shoot ratio, reduction in nutrients uptake and their assimilation, among others. Some other effects related specifically to the photosynthesis process include the decrease in chlorophyll content and intercellular carbon dioxide. When it comes to the effects in the osmotic balance, plants go through a reduction of the turgor pressure and osmotic capacity caused by the accumulation of solutes due to water absence. Overall, and when all these effects are displayed together, the production and yield of the plant are drastically reduced (8).
+
+However, the effects of water stress might variate according to the plants in concern. This project investigates the mechanisms of water stress tolerance in both crop and weed species. While water scarcity negatively affects weed growth, it does not entirely prevent seed germination, growth, and reproduction, resulting in a rise of weed seed production (9). Different cultivars respond differently to moisture stress, with some demonstrating resilience to extreme temperatures and unfavorable seed conditions. Moisture stress affects emergence, yield components and accelerates maturity, resulting in fewer tillers and seeds, ultimately reducing overall yield. The degree of these impacts is influenced by the growth stage, stress severity and cultivar genotype (10).
+
+The aim of this project is to compare several morphophysiological variables of 15 different crop and weed species under three different water stress conditions. It is expected to contribute to the study of drought tolerance in order to optimize water management strategies and improve crop resilience to changing environmental conditions.
+
+**Objectives and hypothesis**
+
+Objective: To compare the effect of different levels of water stress on physiological variables of a set of plant species.
+
+Hypothesis: The effect of water stress on the physiological variables of weed species will exhibit a better adaptation to water stress than the crop species.
+
+**Methods**
+
+*Origin and structure of the data*
+
+Data comes from two different intake's experiments for the Adaptation to climate change course, in 2022 and 2023. The data was arranged by group, species, and week of the experiment. The variables were assessed depending on their treatment. The variables of interest for this study were: Plant height, soil humidity, leaf number, chlorophyll content, root length, aerial fresh weight, roots fresh weight, aerial dry weight, and roots dry weight. The data was retrieved from two collective databases by rendering the file called "00a_data-download.R". Then, the data from both analyzed years was bound by rendering the file called "00b_data-bind.R". Finally, the data was checked for any inconsistencies by rendering the file called "01_data-check.qmd". All the required files are found within this project file. The packages required for the data plotting and analysis included "ggplot2", "tidyr", "dplyr" and "agricolae".
+
+*Graph plotting*
+
+Graphs were plotted displaying the mean values of the measured variables for both species and treatment. The variables measured along the whole time the experiment was conducted (soil humidity, plant height, and leaf number), line graphs were plotted in order to observe their progression. On the other hand, for variables measured just once at the end of the experiment (chlorophyll content, root length, aerial fresh weight, roots fresh weight, aerial dry weight, and roots dry weight), bar graphs were plotted.
+
+*Statistical analysis*
+
+For each data set containing each one of the assessed variables for all the 15 species, a descriptive analysis was carried out by calculating the centered and deviation measures (mean, median, variance and standard error). In order to compare the different treatments, linear models were established for comparing more than two treatments. Both parametric (ANOVA and Tukey-HSD) and non-parametric (Kruskal-Wallis) tests were applied. The Shapiro-Wilk test for normality of the residuals was also applied, and according to the results was decided whether to use the results of parametric or non-parametric analysis.
+
+**Results**
+
+```{r, include=FALSE}
 # Load the data
 load("data/bound-data.Rdata")
 
-# Load necessary libraries
-library(dplyr)
+# Install and/or load the necessary libraries
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("agricolae")
 library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(agricolae)
 
 # Convert Week to a factor
 datab$Week1 <- as.factor(datab$Week)
@@ -20,7 +64,7 @@ datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflex
 
 Plant height
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean plant height
 meanheight_byweeks <- datab %>%
   group_by(Species, Treatment, Week) %>%
@@ -32,16 +76,16 @@ ggplot(meanheight_byweeks, aes(x = Week, y = Mean_plant_height, color = Treatmen
   geom_line() +
   theme_bw() +
   facet_wrap(~Species, scales = "free_y")+
-labs(title = "Mean Plant Height Over Weeks",
+  theme(strip.text = element_text(face = "italic"))+
+labs(caption = "Figure 1. Mean plant height of the 15 plant species under three different water stress conditions.",
        x = "Week",
-       y = "Mean Plant Height") +
-  theme(legend.position = "top", legend.box.background = element_rect(colour = "black")) # Facet by Species with free y-axis scales
-
+       y = "Plant height (cm)") +
+  theme(plot.caption = element_text(hjust = 0), legend.position = "top", legend.box.background = element_rect(colour = "black")) # Facet by Species with free y-axis scales
 ```
 
 Soil humidity
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean soil humidity
 meanhumidity_byweeks <- datab %>%
     filter(!is.na(Soil_humidity)) %>%
@@ -54,15 +98,16 @@ ggplot(meanhumidity_byweeks, aes(x = Week, y = Mean_soil_humidity, color = Treat
   geom_line() +
   theme_bw() +
   facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
-labs(title = "Mean Soil Humidity Over Weeks",
+theme(strip.text = element_text(face = "italic"))+
+labs(caption = "Figure 2. Mean soil humidity of the 15 plant species under three different water stress conditions.",
        x = "Week",
-       y = "Mean Soil Humidity") +
-  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
+       y = "Soil humidity (%)") +
+  theme(plot.caption = element_text(hjust = 0), legend.position = "top", legend.box.background = element_rect(colour = "black"))
 ```
 
-Leaf_number
+Leaf number
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean leaf number
 meanleafnumber_byweeks <- datab %>%
   filter(!is.na(Leaf_number)) %>%
@@ -75,15 +120,16 @@ ggplot(meanleafnumber_byweeks, aes(x = Week, y = Mean_leaf_number, color = Treat
   geom_line() +
   theme_bw() +
   facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
-labs(title = "Mean Leaf Number Over Weeks",
+theme(strip.text = element_text(face = "italic"))+
+labs(caption = "Figure 3. Mean leaf number of the 15 plant species under three different water stress conditions.",
        x = "Week",
-       y = "Mean Leaf Number") +
-  theme(legend.position = "top", legend.box.background = element_rect(colour = "black"))
+       y = "Leaf number") +
+  theme(plot.caption = element_text(hjust = 0), legend.position = "top", legend.box.background = element_rect(colour = "black"))
 ```
 
-Chlorophyll_content bar
+Chlorophyll content
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 meanchlorophyll_byweeks <- datab %>%
   filter(!is.na(Chlorophyll_content)) %>%
   group_by(Species, Treatment, Week) %>%
@@ -91,17 +137,17 @@ meanchlorophyll_byweeks <- datab %>%
 #barplot
 
 ggplot(meanchlorophyll_byweeks, aes(x = Species, y = Mean_Chlorophyll, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(title = "Mean Chlorophyll Content by Species and Treatment",
+  labs(caption = "Figure 4. Mean chlorophyll content of the 15 plant species under three different water stress conditions.",
        x = "Species",
-       y = "Mean Chlorophyll Content") +
+       y = "Chlorophyll content (SPAD units)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
   scale_fill_brewer(palette="Set1") 
 ```
 
-Aerial_fresh_weight #CHANGE GRAPH TYPE MAYBE BAR GRAPH
+Aerial fresh weight
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean 
 meanaerialfresh_byweeks <- datab %>%
   filter(!is.na(Aerial_fresh_weight)) %>%
@@ -111,18 +157,18 @@ meanaerialfresh_byweeks <- datab %>%
 #barplot
 
 ggplot(meanaerialfresh_byweeks, aes(x = Species, y = Mean_Aerialfresh, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(title = "Mean Aerial Fresh Weight by Species and Treatment",
+  labs(caption = "Figure 5. Mean aerial fresh weight of the 15 plant species under three different water stress conditions.",
        x = "Species",
-       y = "Mean Aerial Fresh Weight") +
+       y = "Aerial fresh weight (g)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
   scale_fill_brewer(palette="Set1") 
 
 ```
 
-Aerial_dry_weight
+Aerial dry weight
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean 
 meanaerialdry_byweeks <- datab %>%
   filter(!is.na(Aerial_dry_weight)) %>%
@@ -131,17 +177,17 @@ meanaerialdry_byweeks <- datab %>%
 #barplot
 
 ggplot(meanaerialdry_byweeks, aes(x = Species, y = Mean_Aerialdry, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(title = "Mean Aerial Dry Weight by Species and Treatment",
+  labs(caption = "Figure 6. Mean aerial dry weight of the 15 plant species under three different water stress conditions.",
   x = "Species",
-  y = "Mean Aerial Dry Weight") +
+  y = "Aerial dry weight (g)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
   scale_fill_brewer(palette="Set1") 
 ```
 
-Root_length
+Root length
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean 
 meanroot_lenght <- datab %>%
   filter(!is.na(Root_length)) %>%
@@ -150,17 +196,17 @@ meanroot_lenght <- datab %>%
 #barplot
 
 ggplot(meanroot_lenght, aes(x = Species, y = Mean_Rootlength, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(title = "Mean Root Lenght by Species and Treatment",
+  labs(caption = "Figure 7. Mean root length of the 15 plant species under three different water stress conditions.",
   x = "Species",
-  y = "Mean Root Lenght") +
+  y = "Root length (cm)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
   scale_fill_brewer(palette="Set1")
 ```
 
-Root_fresh_weight
+Roots fresh weight
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean 
 meanroot_fresh <- datab %>%
   filter(!is.na(Roots_fresh_weight)) %>%
@@ -169,17 +215,17 @@ meanroot_fresh <- datab %>%
 #barplot
 
 ggplot(meanroot_fresh, aes(x = Species, y = Mean_Rootfresh, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(title = "Mean Root Fresh Weight by Species and Treatment",
+  labs(caption = "Figure 8. Mean roots fresh weight of the 15 plant species under three different water stress conditions.",
   x = "Species",
-  y = "Mean Root Fresh Weight") +
+  y = "Roots fresh weight (g)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
   scale_fill_brewer(palette="Set1")
 ```
 
-Root_dry_weight
+Roots dry weight
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 # Group by Species, Treatment, and Week and calculate mean 
 meanroot_dry <- datab %>%
   filter(!is.na(Roots_dry_weight)) %>%
@@ -188,33 +234,17 @@ meanroot_dry <- datab %>%
 #barplot
 
 ggplot(meanroot_dry, aes(x = Species, y = Mean_Rootdry, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(title = "Mean Root Dry Weight by Species and Treatment",
+  labs(caption = "Figure 9. Mean roots dry weight of the 15 plant species under three different water stress conditions.",
   x = "Species",
-  y = "Mean Root Dry Weight") +
+  y = "Roots dry weight (g)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, vjust = 1, hjust=1))+
+  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
   scale_fill_brewer(palette="Set1")
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for soil humidity.
-
-```{r}
-library(agricolae)
-
-datab$Soil_humidity <- as.numeric(datab$Soil_humidity)
-
-st.sh <- datab %>%
-  filter(!is.na(Soil_humidity)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Soil.Humidity = mean(Soil_humidity),
-            Median.Soil.Humidity = median(Soil_humidity),
-            Variance.Soil.Humidity = var(Soil_humidity),
-            Standard.Deviation.Soil.Humidity = sd(Soil_humidity))
 ```
 
 Statistical analysis - Descriptive analysis (Centered and deviation measures) for plant height.
 
-```{r}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 st.ph <- datab %>%
   filter(!is.na(Plant_height)) %>%
   group_by(Species,Treatment,Week) %>%
@@ -224,92 +254,15 @@ st.ph <- datab %>%
             Standard.Deviation.Plant.Height = sd(Plant_height))
 ```
 
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for leaf number.
-
 ```{r}
-st.ln <- datab %>%
-  filter(!is.na(Leaf_number)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Leaf.Number = mean(Leaf_number),
-            Median.Leaf.Number = median(Leaf_number),
-            Variance.Leaf.Number = var(Leaf_number),
-            Standard.Deviation.Leaf.Number = sd(Leaf_number))
-
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for chlorophyll content.
-
-```{r}
-st.cc <- datab %>%
-  filter(!is.na(Chlorophyll_content)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Chlorophyll.Content = mean(Chlorophyll_content),
-            Median.Chlorophyll.Content = median(Chlorophyll_content),
-            Variance.Chlorophyll.Content = var(Chlorophyll_content),
-            Standard.Deviation.Chlorophyll.Content = sd(Chlorophyll_content))
-
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for aerial fresh weight.
-
-```{r}
-st.afw <- datab %>%
-  filter(!is.na(Aerial_fresh_weight)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Aerial.Fresh.Weight = mean(Aerial_fresh_weight),
-            Median.Aerial.Fresh.Weight = median(Aerial_fresh_weight),
-            Variance.Aerial.Fresh.Weight = var(Aerial_fresh_weight),
-            Standard.Deviation.Aerial.Fresh.Weight = sd(Aerial_fresh_weight))
-
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for root length.
-
-```{r}
-st.rl <- datab %>%
-  filter(!is.na(Root_length)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Root.Length = mean(Root_length),
-            Median.Root.Length = median(Root_length),
-            Variance.Root.Length = var(Root_length),
-            Standard.Deviation.Root.Length = sd(Root_length))
-
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for root fresh weight.
-
-```{r}
-st.rfw <- datab %>%
-  filter(!is.na(Roots_fresh_weight)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Roots.Fresh.Weight = mean(Roots_fresh_weight),
-            Median.Roots.Fresh.Weight = median(Roots_fresh_weight),
-            Variance.Roots.Fresh.Weight = var(Roots_fresh_weight),
-            Standard.Deviation.Roots.Fresh.Weight = sd(Roots_fresh_weight))
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for soil humidity.
-
-```{r}
-st.sh <- st.sh %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-ansh <- aov(formula = st.sh$Mean.Soil.Humidity ~ st.sh$SpeciesTreatment)
-ansh
-
-hsdsh <- HSD.test(ansh, trt="st.sh$SpeciesTreatment")
-hsdsh
-
-krsh <- agricolae::kruskal(st.sh$Mean.Soil.Humidity,trt=st.sh$SpeciesTreatment)
-krsh
-
-shsh <- shapiro.test(ansh$residuals)
-shsh
+st.ph
 ```
 
 Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for plant height.
 
-```{r}
+For the variable plant height, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 st.ph <- st.ph %>%
 tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
@@ -326,9 +279,73 @@ shph <- shapiro.test(anph$residuals)
 shph
 ```
 
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for leaf number.
+```{r}
+krph[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for soil humidity.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.sh <- datab %>%
+  filter(!is.na(Soil_humidity)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Soil.Humidity = mean(Soil_humidity),
+            Median.Soil.Humidity = median(Soil_humidity),
+            Variance.Soil.Humidity = var(Soil_humidity),
+            Standard.Deviation.Soil.Humidity = sd(Soil_humidity))
+```
 
 ```{r}
+st.sh
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for soil humidity.
+
+For the variable soil humidity, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+st.sh <- st.sh %>%
+tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+  
+ansh <- aov(formula = st.sh$Mean.Soil.Humidity ~ st.sh$SpeciesTreatment)
+ansh
+
+hsdsh <- HSD.test(ansh, trt="st.sh$SpeciesTreatment")
+hsdsh
+
+krsh <- agricolae::kruskal(st.sh$Mean.Soil.Humidity,trt=st.sh$SpeciesTreatment)
+krsh
+
+shsh <- shapiro.test(ansh$residuals)
+shsh
+```
+
+```{r}
+krsh[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for leaf number.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.ln <- datab %>%
+  filter(!is.na(Leaf_number)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Leaf.Number = mean(Leaf_number),
+            Median.Leaf.Number = median(Leaf_number),
+            Variance.Leaf.Number = var(Leaf_number),
+            Standard.Deviation.Leaf.Number = sd(Leaf_number))
+
+```
+
+```{r}
+st.ln
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for leaf number.
+
+For the variable leaf number, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 st.ln <- st.ln %>%
 tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
@@ -345,9 +362,32 @@ shln <- shapiro.test(anln$residuals)
 shln
 ```
 
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for chlorophyll content.
+```{r}
+krln[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for chlorophyll content.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.cc <- datab %>%
+  filter(!is.na(Chlorophyll_content)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Chlorophyll.Content = mean(Chlorophyll_content),
+            Median.Chlorophyll.Content = median(Chlorophyll_content),
+            Variance.Chlorophyll.Content = var(Chlorophyll_content),
+            Standard.Deviation.Chlorophyll.Content = sd(Chlorophyll_content))
+
+```
 
 ```{r}
+st.cc
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for chlorophyll content.
+
+For the variable chlorophyll content, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 st.cc <- st.cc %>%
 tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
@@ -364,9 +404,32 @@ shcc <- shapiro.test(ancc$residuals)
 shcc
 ```
 
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for aerial fresh weight.
+```{r}
+krcc[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for aerial fresh weight.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.afw <- datab %>%
+  filter(!is.na(Aerial_fresh_weight)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Aerial.Fresh.Weight = mean(Aerial_fresh_weight),
+            Median.Aerial.Fresh.Weight = median(Aerial_fresh_weight),
+            Variance.Aerial.Fresh.Weight = var(Aerial_fresh_weight),
+            Standard.Deviation.Aerial.Fresh.Weight = sd(Aerial_fresh_weight))
+
+```
 
 ```{r}
+st.afw
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for aerial fresh weight.
+
+For the variable aerial fresh weight, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 st.afw <- st.afw %>%
 tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
@@ -383,9 +446,48 @@ shafw <- shapiro.test(anafw$residuals)
 shafw
 ```
 
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for root length.
+```{r}
+krafw[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for aerial dry weight.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.adw <- datab %>%
+  filter(!is.na(Aerial_dry_weight)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Aerial.Dry.Weight = mean(Aerial_dry_weight),
+            Median.Aerial.Dry.Weight = median(Aerial_dry_weight),
+            Variance.Aerial.Dry.Weight = var(Aerial_dry_weight),
+            Standard.Deviation.Aerial.Dry.Weight = sd(Aerial_dry_weight))
+```
 
 ```{r}
+st.adw
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for root length.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.rl <- datab %>%
+  filter(!is.na(Root_length)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Root.Length = mean(Root_length),
+            Median.Root.Length = median(Root_length),
+            Variance.Root.Length = var(Root_length),
+            Standard.Deviation.Root.Length = sd(Root_length))
+
+```
+
+```{r}
+st.rl
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for root length.
+
+For the variable root length, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 st.rl <- st.rl %>%
 tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
@@ -402,9 +504,31 @@ shrl <- shapiro.test(anrl$residuals)
 shrl
 ```
 
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for root fresh weight.
+```{r}
+krrl[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for roots fresh weight.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.rfw <- datab %>%
+  filter(!is.na(Roots_fresh_weight)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Roots.Fresh.Weight = mean(Roots_fresh_weight),
+            Median.Roots.Fresh.Weight = median(Roots_fresh_weight),
+            Variance.Roots.Fresh.Weight = var(Roots_fresh_weight),
+            Standard.Deviation.Roots.Fresh.Weight = sd(Roots_fresh_weight))
+```
 
 ```{r}
+st.rfw
+```
+
+Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for roots fresh weight.
+
+For the variable roots fresh weight, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 st.rfw <- st.rfw %>%
 tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
@@ -421,4 +545,80 @@ shrfw <- shapiro.test(anrfw$residuals)
 shrfw
 ```
 
-\`\`\`
+```{r}
+krrfw[5]
+```
+
+Statistical analysis - Descriptive analysis (Centered and deviation measures) for roots dry weight.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+st.rdw <- datab %>%
+  filter(!is.na(Roots_dry_weight)) %>%
+  group_by(Species,Treatment,Week) %>%
+  summarise(Mean.Roots.Dry.Weight = mean(Roots_dry_weight),
+            Median.Roots.Dry.Weight = median(Roots_dry_weight),
+            Variance.Roots.Dry.Weight = var(Roots_dry_weight),
+            Standard.Deviation.Roots.Dry.Weight = sd(Roots_dry_weight))
+```
+
+```{r}
+st.rdw
+```
+
+**Discussion**
+
+The data reveals distinct variations in the development of variables over time and treatment for different species. This section aims to examine the way in which observations differ between species and variables under different water stress scenarios applied over time. Furthermore, it seeks to determine which variables are useful in the analysis and prediction of water stress responses in the selected plants. This determination will depend on the significance found in statistical analysis, as well as trends observed in the plotted graphs.
+
+Depending on the chosen variable there are some trends that could be established. In the case of soil humidity, it is linked to environmental conditions during the study and they differ in some cases during the last week due to the different technicians of the greenhouse apart from our researchers, it can act as a control variable in order to check the stress exposure. Humidity may increase across the day due to changes in irrigation frequency, environmental temperature and sunlight. This variable reflects the capacity of the plant to absorb water, as mentioned before results are not significant because of varying data during last weeks.
+
+On one hand regarding plant height, the weeds: *L. rigidum*, *S. verticillata* and *A. fatua* are more adapted to drought stress. On the other, the cultivated species exhibiting adaptation are *H. vulgare* and *T. aestivum*. 
+
+The number of leaves decreased under both drought conditions. Some species were least affected such as *L. perenne*, a weed. *R. sativus* was the most affected regarding this variable. Statistically weeds are the ones that produce the most number of leaves being the case of *E. annuus*, *L. rigidum* and *S. verticillata*.
+
+In the case of the chlorophyll content *R. sativus* exhibited an abnormality as the content in the photosynthetic pigment increased in conditions of severe drought. Statistically *E. annuus* and *A. sericifera* had the highest chlorophyll content. *B. vulgaris* had the same trend as *R. sativus* as they share their radicular strategy using that organ as energy storage. As a cultivated species *H. vulgare* chlorophyll content dropped dramatically in severe drought conditions, although it was stable for intermediated drought opening the possibility for the existence of a tolerance window for water stress.
+
+Absolute numbers of aerial weight, both fresh and dry, and root weight, both fresh and dry, are not appropriate for further analysis as they are dependent on plant physiology and vary greatly from species to species. Furthermore, the measurements for aerial fresh weight, aerial dry weight, and mean root length did not produce statistically significant results, while a statistical analysis for root fresh weight and root dry weight did not yield any output. Nonetheless, the analyzed charts illustrate patterns for physiological traits among the species.
+
+By examining the difference between aerial fresh and dry weight, it is possible to deduce leaf water content. As previously stated, *R. sativus* and *B. vulgaris* have a tendency to store the majority of their energy in their roots. Their water content in terms of aerial weight is the highest observed. Similarly, *S. oleraceus* and *S. lycopersicum* exhibit significantly elevated levels of water in their leaves. The fresh and dry weight values of the roots remain constant across all species throughout time, exhibiting similar outcomes to that of the fresh and dry weight findings of the aerial parts, with the exception of *R. sativus*, which has a comparably high water content. Mean root length displays an anomaly in *R. sativus* and *B. vulgaris*, with the latter showing the highest value under severe drought. Shorter roots in *P. oleracea*, *A. retroflexus* and *S. oleracea* could be attributed to their morphology. *H. vulgare* shows a reduction in root length under severe water stress conditions, whereas *S. oleraceus* appears to be the most resilient in terms of root length, and experiences the least impact on root growth from the water stress treatments applied. However, this might not be the optimal variable to evaluate water stress resistance as there were no statistically significant variations found between the species.
+
+Water stress sensitivity can be best assessed by observing changes in the mean plant height and leaf numbers as these are morphological variables influenced by the availability or lack of water. As seen in the ANOVA analysis, the mean plant height and leaf number showed significant values compared to the aerial fresh weights and dry weights, which is best used to assess differences between treatments.
+
+As represented in the graph, the mean plant height showed significant increase in the control and intermediate treatments, but decrease in the severe treatments of some plants like *H. vulgare* and *T. aestivum* were observed in the last weeks as the water stress was prolonged. This significant variation is also observed in the steady increase in the leaf number of the intermediate and control treatments. However, the aerial fresh, dry weights and root length is not an appropriate variable to assess drought tolerance as measurements were taken at the point of termination and it does not evolve over time.
+
+Generally, wild plants are seen to have better tolerance to water stress than the cultivated crop species due to their evolutionary history in diverse environments. This is seen in the steady increase in plant heights and leaf number of the wild species.
+
+The effect of water stress in different species can be compared by measuring some morphological characteristics (such as plant height, leaf number, fresh and dry weight, chlorophyll content, number of leaves, etc) over time. Various statistical analyses like ANOVA can be calculated to determine if there are significant differences among the means of multiple groups, Kruskal-Wallis test and Shapiro-Wilk test to assess the normality of data distribution for each variable across species and stress conditions. This can then be interpreted by graphical representation of the data using suitable plots and graphs to visually present the differences among species and stress conditions for each variable. 
+
+Several variables served as reliable indicators of water stress in the experimented plants, the best variables being plant height and leaf number. As plants were exposed to water stress, a steady increase in the growth of crops in the control, intermediate and severe treatment (for most wild species) was observed over time. Morphological and physiological characteristics like plant height and leaf number are good indicators of water stress because reduced water availability limits cell expansion and elongation, resulting in stunted growth and shorter plant height, which can be easily distinguished and measured. A well-watered plant also tends to produce an optimal number of leaves as it grows. Under water stress, the plant might reduce the number of leaves produced or prematurely shed existing leaves as an adaptive response to conserve water. 
+
+In root storage crops like *B. vulgaris* and *R. sativus*, *B. vulgaris* was better adapted to an immediate water stress condition, growing up to 25 cm in length (within seven weeks) while the severe water treatment for *R. sativum* showed the best adaptability to water stress, growing up to 34 cm in length.
+
+To sum up, when compared to cultivated species, weeds exhibit a tolerant behavior especially in the intermediate drought treatments. This is evident for some variables like plant height in species like *A. sericifera* and *L. rigidum*, in which the mean values achieved with this treatment were higher than those from the control group. On the other hand, for the same variable, crops like *T. aestivum* and *H. vulgare* displayed significant differences among the three treatments.
+
+**Conclusions**
+
+The data analyzed in this study allows the identification of differences regarding the adaptive response of wild species in comparison to cultivated species. By exploring morphophysiological variables that are intrinsically linked to water stress tolerance, it was possible to identify that wild species exhibit an adaptive response towards an intermediate level of drought.
+
+Among the assessed variables it has been found out that leaf number and plant height are the most suitable morphophysiological variables for the study of drought stress in the analyzed species, since with such variables it was possible to detect significant differences within the different groups of species and treatments. The species differ in their morphological values also due to their own water tolerance strategy. Further studies should be conducted in order to establish a window of tolerance to water stress, and including other important crop species.
+
+**References**
+
+Boyer, J. S. (1982). Plant Productivity and Environment. In Science, 218, 443--448.
+
+Cramer, G. R., Urano, K., Delrot, S., Pezzotti, M., & Shinozaki, K. (2011). Effects of Abiotic Stress on Plants: A Systems Biology Perspective. In BMC Plant Biology, 11, 1--14.
+
+Donaldson, E. (1996). Crop traits for water stress tolerance. In American Journal of Alternative Agriculture, 11(2-3), 89-94. doi:10.1017/S0889189300006846.
+
+Fahad, S., Bajwa, A. A., Nazir, U., Anjum, S. A., Farooq, A., Zohaib, A., et al. (2017). Crop production under drought and heat stress: Plant responses and management options. In Frontiers in Plant Science, 8, 29.
+
+Ondrasek, G., Rengel, Z., & Veres, S. (2011). Soil Salinisation and Salt Stress in Crop Production. Abiotic Stress in Plants - Mechanisms and Adaptations. InTech. Available at: http://dx.doi.org/10.5772/22248.
+
+Ondrasek, G. (2013). The Responses of Salt-Affected Plants to Cadmium. In P. Ahmad, M. M. Azooz, & M. N. V. Prasad (Eds.), Salt Stress in Plants. Springer, New York, NY. https://doi.org/10.1007/978-1-4614-6108-1_17.
+
+Ondrasek, G. (2014). Water Scarcity and Water Stress in Agriculture. In P. Ahmad & M. Wani (Eds.), Physiological Mechanisms and Adaptation Strategies in Plants Under Changing Environment. Springer, New York, NY. <https://doi.org/10.1007/978-1-4614-8591-9_4>.
+
+Singh, M., Thapa, R., Kukal, M. S., Irmak, S., Mirsky, S., & Jhala, A. J. (2022). Effect of Water Stress on Weed Germination, Growth Characteristics, and Seed Production: A Global Meta-Analysis. In Weed Science, 70(6), 621--640. DOI: 10.1017/wsc.2022.59.
+
+Tajinder, K., & Saroj, A. (2021). Environmental Stress Physiology of Plants and Crop Productivity. Bentham Science Publishers Ltd.
+
+United Nations. (2023). United Nations. \[Accessed on 29 November 2022\]. Available online: <https://www.un.org>.
