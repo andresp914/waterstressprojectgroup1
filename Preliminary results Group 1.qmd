@@ -1,14 +1,27 @@
 ---
-title: "Effect of different water stress levels on morphophysiological variables of 15 crop and weed species."
+title: Effect of different water stress levels on morphophysiological variables of 15 crop and weed species.
+author:
+  - name: Chidimma Akabuogu 
+  - name: Paul Bosse
+  - name: Andrés Pascagaza
+  - name: Javier Rojas
+date: last-modified
+date-format: iso
+lang: en-EN
+code-fold: true
+toc: true
+toc-location: body
+toc-depth: 6
+toc-title: Contents
 format: html
 editor: visual
 ---
 
-**Team members**
+# Team members
 
 Chidimma Akabuogu, Paul Bosse, Andrés Pascagaza and Javier Rojas.
 
-**Introduction**
+# Introduction
 
 The global human population recently reached 8 billion people and the latest projections by the United Nations suggest that the world's population could grow to 8.5 billion by 2030 and 9.7 billion by 2050 (1). In a changing climate, environmental change is, therefore, an important factor for agriculture in an attempt to meet the growing need for food worldwide. Unfortunately, the vast majority of land is exposed to stressful conditions (2). Abiotic stress has been identified as one of the key factors threatening global food security. Compared to record yields, abiotic stress can reduce yields by more than 60% on average (3). Throughout their growth and development, crops encounter several abiotic factors or stresses (i.e. drought, flooding, osmotic stress, high temperatures, UV-radiation, nutrient imbalance, etc.) extremely affecting plant growth and development, leading to a reduction of the final yield and ultimately affecting worldwide food security (4).
 
@@ -20,27 +33,27 @@ However, the effects of water stress might variate according to the plants in co
 
 The aim of this project is to compare several morphophysiological variables of 15 different crop and weed species under three different water stress conditions. It is expected to contribute to the study of drought tolerance in order to optimize water management strategies and improve crop resilience to changing environmental conditions.
 
-**Objectives and hypothesis**
+# Objectives and hypothesis
 
 Objective: To compare the effect of different levels of water stress on physiological variables of a set of plant species.
 
 Hypothesis: The effect of water stress on the physiological variables of weed species will exhibit a better adaptation to water stress than the crop species.
 
-**Methods**
+# Methods
 
-*Origin and structure of the data*
+## Origin and structure of the data
 
 Data comes from two different intake's experiments for the Adaptation to climate change course, in 2022 and 2023. The data was arranged by group, species, and week of the experiment. The variables were assessed depending on their treatment. The variables of interest for this study were: Plant height, soil humidity, leaf number, chlorophyll content, root length, aerial fresh weight, roots fresh weight, aerial dry weight, and roots dry weight. The data was retrieved from two collective databases by rendering the file called "00a_data-download.R". Then, the data from both analyzed years was bound by rendering the file called "00b_data-bind.R". Finally, the data was checked for any inconsistencies by rendering the file called "01_data-check.qmd". All the required files are found within this project file. The packages required for the data plotting and analysis included "ggplot2", "tidyr", "dplyr" and "agricolae".
 
-*Graph plotting*
+## Graph plotting
 
 Graphs were plotted displaying the mean values of the measured variables for both species and treatment. The variables measured along the whole time the experiment was conducted (soil humidity, plant height, and leaf number), line graphs were plotted in order to observe their progression. On the other hand, for variables measured just once at the end of the experiment (chlorophyll content, root length, aerial fresh weight, roots fresh weight, aerial dry weight, and roots dry weight), bar graphs were plotted.
 
-*Statistical analysis*
+## Statistical analysis
 
 For each data set containing each one of the assessed variables for all the 15 species, a descriptive analysis was carried out by calculating the centered and deviation measures (mean, median, variance and standard error). In order to compare the different treatments, linear models were established for comparing more than two treatments. Both parametric (ANOVA and Tukey-HSD) and non-parametric (Kruskal-Wallis) tests were applied. The Shapiro-Wilk test for normality of the residuals was also applied, and according to the results was decided whether to use the results of parametric or non-parametric analysis.
 
-**Results**
+# Results
 
 ```{r, include=FALSE}
 # Load the data
@@ -56,6 +69,8 @@ library(dplyr)
 library(tidyr)
 library(agricolae)
 
+
+
 # Convert Week to a factor
 datab$Week1 <- as.factor(datab$Week)
 datab$Soil_humidity <-  as.numeric(datab$Soil_humidity)
@@ -64,185 +79,98 @@ datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflex
 
 Plant height
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean plant height
-meanheight_byweeks <- datab %>%
-  group_by(Species, Treatment, Week) %>%
-  summarise(Mean_plant_height = mean(Plant_height))
+check @fig-ph (naming chunk to check the figure in text)
 
-# Create a ggplot with facets for each species
-ggplot(meanheight_byweeks, aes(x = Week, y = Mean_plant_height, color = Treatment, group = Treatment)) +
-  geom_point() +
-  geom_line() +
-  theme_bw() +
-  facet_wrap(~Species, scales = "free_y")+
-  theme(strip.text = element_text(face = "italic"))+
-labs(caption = "Figure 1. Mean plant height of the 15 plant species under three different water stress conditions.",
-       x = "Week",
-       y = "Plant height (cm)") +
-  theme(plot.caption = element_text(hjust = 0), legend.position = "top", legend.box.background = element_rect(colour = "black")) # Facet by Species with free y-axis scales
+```{r fig-ph, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the 15 plant species under three different water stress conditions.")
+variable <- "Plant_height"
+variablename <- "Plant height cm"
+source("rmd/lineplot.R")
+g
 ```
 
 Soil humidity
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean soil humidity
-meanhumidity_byweeks <- datab %>%
-    filter(!is.na(Soil_humidity)) %>%
-  group_by(Species, Treatment, Week) %>%
-  summarise(Mean_soil_humidity = mean(Soil_humidity))
-
-# Create a ggplot with facets for each species 
-ggplot(meanhumidity_byweeks, aes(x = Week, y = Mean_soil_humidity, color = Treatment, group = Treatment)) +
-  geom_point() +
-  geom_line() +
-  theme_bw() +
-  facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
-theme(strip.text = element_text(face = "italic"))+
-labs(caption = "Figure 2. Mean soil humidity of the 15 plant species under three different water stress conditions.",
-       x = "Week",
-       y = "Soil humidity (%)") +
-  theme(plot.caption = element_text(hjust = 0), legend.position = "top", legend.box.background = element_rect(colour = "black"))
+```{r fig-sh, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the 15 plant species under three different water stress conditions.")
+variable <- "Soil_humidity"
+variablename <- "Soil humidity"
+source("rmd/lineplot.R")
+g
 ```
 
 Leaf number
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean leaf number
-meanleafnumber_byweeks <- datab %>%
-  filter(!is.na(Leaf_number)) %>%
-  group_by(Species, Treatment, Week) %>%
-  summarise(Mean_leaf_number = mean(Leaf_number))
-
-# Create a ggplot with facets for each species
-ggplot(meanleafnumber_byweeks, aes(x = Week, y = Mean_leaf_number, color = Treatment, group = Treatment)) +
-  geom_point() +
-  geom_line() +
-  theme_bw() +
-  facet_wrap(~Species, scales = "free_y")+  # Facet by Species with free y-axis scales
-theme(strip.text = element_text(face = "italic"))+
-labs(caption = "Figure 3. Mean leaf number of the 15 plant species under three different water stress conditions.",
-       x = "Week",
-       y = "Leaf number") +
-  theme(plot.caption = element_text(hjust = 0), legend.position = "top", legend.box.background = element_rect(colour = "black"))
+```{r fig-ln, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the 15 plant species under three different water stress conditions.")
+variable <- "Leaf_number"
+variablename <- "Leaf number"
+source("rmd/lineplot.R")
+g
 ```
 
 Chlorophyll content
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-meanchlorophyll_byweeks <- datab %>%
-  filter(!is.na(Chlorophyll_content)) %>%
-  group_by(Species, Treatment, Week) %>%
-  summarise(Mean_Chlorophyll = mean(Chlorophyll_content))
-#barplot
 
-ggplot(meanchlorophyll_byweeks, aes(x = Species, y = Mean_Chlorophyll, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(caption = "Figure 4. Mean chlorophyll content of the 15 plant species under three different water stress conditions.",
-       x = "Species",
-       y = "Chlorophyll content (SPAD units)") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
-  scale_fill_brewer(palette="Set1") 
+```{r fig-cc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Chlorophyll_content"
+variablesname <- "Chlorophyll content (SPAD units)"
+source("rmd/boxplot.R")
+b
 ```
 
 Aerial fresh weight
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean 
-meanaerialfresh_byweeks <- datab %>%
-  filter(!is.na(Aerial_fresh_weight)) %>%
-  group_by(Species, Treatment) %>%
-  summarise(Mean_Aerialfresh = mean(Aerial_fresh_weight))
-
-#barplot
-
-ggplot(meanaerialfresh_byweeks, aes(x = Species, y = Mean_Aerialfresh, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(caption = "Figure 5. Mean aerial fresh weight of the 15 plant species under three different water stress conditions.",
-       x = "Species",
-       y = "Aerial fresh weight (g)") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
-  scale_fill_brewer(palette="Set1") 
-
+```{r fig-afw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Aerial_fresh_weight"
+variablesname <- "Aerial fresh weight (g)"
+source("rmd/boxplot.R")
+b
 ```
 
 Aerial dry weight
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean 
-meanaerialdry_byweeks <- datab %>%
-  filter(!is.na(Aerial_dry_weight)) %>%
-  group_by(Species, Treatment) %>%
-  summarise(Mean_Aerialdry = mean(Aerial_dry_weight))
-#barplot
-
-ggplot(meanaerialdry_byweeks, aes(x = Species, y = Mean_Aerialdry, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(caption = "Figure 6. Mean aerial dry weight of the 15 plant species under three different water stress conditions.",
-  x = "Species",
-  y = "Aerial dry weight (g)") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
-  scale_fill_brewer(palette="Set1") 
+```{r fig-adw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Aerial_dry_weight"
+variablesname <- "Aerial dry weight (g)"
+source("rmd/boxplot.R")
+b
 ```
 
 Root length
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean 
-meanroot_lenght <- datab %>%
-  filter(!is.na(Root_length)) %>%
-  group_by(Species, Treatment) %>%
-  summarise(Mean_Rootlength = mean(Root_length))
-#barplot
-
-ggplot(meanroot_lenght, aes(x = Species, y = Mean_Rootlength, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(caption = "Figure 7. Mean root length of the 15 plant species under three different water stress conditions.",
-  x = "Species",
-  y = "Root length (cm)") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
-  scale_fill_brewer(palette="Set1")
+```{r fig-rl, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Root_length"
+variablesname <- "Root length (cm)"
+source("rmd/boxplot.R")
+b
 ```
 
 Roots fresh weight
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean 
-meanroot_fresh <- datab %>%
-  filter(!is.na(Roots_fresh_weight)) %>%
-  group_by(Species, Treatment) %>%
-  summarise(Mean_Rootfresh = mean(Roots_fresh_weight))
-#barplot
-
-ggplot(meanroot_fresh, aes(x = Species, y = Mean_Rootfresh, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(caption = "Figure 8. Mean roots fresh weight of the 15 plant species under three different water stress conditions.",
-  x = "Species",
-  y = "Roots fresh weight (g)") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
-  scale_fill_brewer(palette="Set1")
+```{r fig-rfw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Roots_fresh_weight"
+variablesname <- "Roots fresh weight (g)"
+source("rmd/boxplot.R")
+b
 ```
 
 Roots dry weight
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-# Group by Species, Treatment, and Week and calculate mean 
-meanroot_dry <- datab %>%
-  filter(!is.na(Roots_dry_weight)) %>%
-  group_by(Species, Treatment) %>%
-  summarise(Mean_Rootdry = mean(Roots_dry_weight))
-#barplot
-
-ggplot(meanroot_dry, aes(x = Species, y = Mean_Rootdry, fill = Treatment, colour = Treatment)) +   geom_bar(stat = "identity", position = "dodge")+
-  labs(caption = "Figure 9. Mean roots dry weight of the 15 plant species under three different water stress conditions.",
-  x = "Species",
-  y = "Roots dry weight (g)") +
-  theme_minimal() +
-  theme(plot.caption = element_text(hjust = 0), axis.text.x = element_text(face="italic", angle = 60, vjust = 1, hjust=1))+
-  scale_fill_brewer(palette="Set1")
+```{r fig-rdw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Roots_dry_weight"
+variablesname <- "Roots dry weight (g)"
+source("rmd/boxplot.R")
+b
 ```
 
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for plant height.
+## Statistical analysis - Descriptive analysis (Centered and deviation measures) for plant height.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 st.ph <- datab %>%
@@ -565,7 +493,7 @@ st.rdw <- datab %>%
 st.rdw
 ```
 
-**Discussion**
+# Discussion
 
 The data reveals distinct variations in the development of variables over time and treatment for different species. This section aims to examine the way in which observations differ between species and variables under different water stress scenarios applied over time. Furthermore, it seeks to determine which variables are useful in the analysis and prediction of water stress responses in the selected plants. This determination will depend on the significance found in statistical analysis, as well as trends observed in the plotted graphs.
 
@@ -595,13 +523,13 @@ In root storage crops like *B. vulgaris* and *R. sativus*, *B. vulgaris* was bet
 
 To sum up, when compared to cultivated species, weeds exhibit a tolerant behavior especially in the intermediate drought treatments. This is evident for some variables like plant height in species like *A. sericifera* and *L. rigidum*, in which the mean values achieved with this treatment were higher than those from the control group. On the other hand, for the same variable, crops like *T. aestivum* and *H. vulgare* displayed significant differences among the three treatments.
 
-**Conclusions**
+# Conclusions
 
 The data analyzed in this study allows the identification of differences regarding the adaptive response of wild species in comparison to cultivated species. By exploring morphophysiological variables that are intrinsically linked to water stress tolerance, it was possible to identify that wild species exhibit an adaptive response towards an intermediate level of drought.
 
 Among the assessed variables it has been found out that leaf number and plant height are the most suitable morphophysiological variables for the study of drought stress in the analyzed species, since with such variables it was possible to detect significant differences within the different groups of species and treatments. The species differ in their morphological values also due to their own water tolerance strategy. Further studies should be conducted in order to establish a window of tolerance to water stress, and including other important crop species.
 
-**References**
+# References
 
 Boyer, J. S. (1982). Plant Productivity and Environment. In Science, 218, 443--448.
 
