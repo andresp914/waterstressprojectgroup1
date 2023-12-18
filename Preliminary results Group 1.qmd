@@ -191,20 +191,28 @@ Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for plant height.
 For the variable plant height, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.ph <- st.ph %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+
+model.aov <- aov(datab$Plant_height ~
+                           datab$Treatment * datab$Week +
+                        Error(datab$PlantId/(datab$Treatment + datab$Week + datab$Treatment:datab$Week)))
+
+summary(model.aov)
+model.aov
+# 
+# st.ph <- st.ph %>%
+# tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
   
-anph <- aov(formula = st.ph$Mean.Plant.Height ~ st.ph$SpeciesTreatment)
-anph
+# anph <- aov(formula = st.ph$Mean.Plant.Height ~ st.ph$SpeciesTreatment)
+# anph
 
-hsdph <- HSD.test(anph, trt="st.ph$SpeciesTreatment")
-hsdph
+# hsdph <- HSD.test(anph, trt="st.ph$SpeciesTreatment")
+# hsdph
 
-krph <- agricolae::kruskal(st.ph$Mean.Plant.Height,trt=st.ph$SpeciesTreatment)
-krph
+# krph <- agricolae::kruskal(st.ph$Mean.Plant.Height,trt=st.ph$SpeciesTreatment)
+# krph
 
-shph <- shapiro.test(anph$residuals)
-shph
+# shph <- shapiro.test(anph$residuals)
+# shph
 ```
 
 ```{r}
