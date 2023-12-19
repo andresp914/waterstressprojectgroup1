@@ -174,9 +174,7 @@ b
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 p.value.ph <- numeric()
 l <- levels(as.factor(datab$Species))
-# l <- l[-which(l=="Avena fatua")]
 l <- l[-which(l=="Erigeron annuus")]
-# l <- l[-which(l=="Triticum aestivum")]
 for(i in l) {
   d <- datab[datab$Species==i,]
   d <- d[!is.na(d$Week),]
@@ -187,21 +185,19 @@ for(i in l) {
                   s[[1]][[1]]$`Pr(>F)`[1])
 }
 
-p.value.sh <- numeric()
+p.value.ln <- numeric()
 l <- levels(as.factor(datab$Species))
 l <- l[-which(l=="Erigeron annuus")]
 for(i in l) {
   d <- datab[datab$Species==i,]
   d <- d[!is.na(d$Week),]
   model.aov <- 
-    aov(Soil_humidity ~ Treatment * Week +                        Error(PlantId/(Treatment*Week)),data=d)
-  s1 <- summary(model.aov)
-  p.value.sh <- c(p.value.sh, 
-                  s1[[1]][[1]]$`Pr(>F)`[1])
+    aov(Leaf_number ~ Treatment * Week +                        Error(PlantId/(Treatment*Week)),data=d)
+  s2 <- summary(model.aov)
+  p.value.ln <- c(p.value.ln, 
+                  s2[[1]][[1]]$`Pr(>F)`[1])
 }
-
-list.pvalues <- data.frame(l,p.value.ph,p.value.sh)
-
+list.pvalues <- data.frame(l,p.value.ph,p.value.ln)
 
 # species <- "Amaranthus retroflexus"
 # 
