@@ -24,6 +24,15 @@ legend2023 <- gsheet2tbl(ss)
 ss <- "https://docs.google.com/spreadsheets/d/1g9tCISwgck8Icx6BKGNvlS5HdUq5kIL2ATZTr37-_-k/edit#gid=1136455781"
 dates2023 <-  gsheet2tbl(ss)
 
+### Set 2023 Numerical Variables to Match 2022 Variables ------------------------------------
+N <- sapply(data2022, is.numeric)
+for(i in 1:length(N)){
+  if (N[i])
+    data2023[[names(N)[i]]] <- as.numeric(data2023[[names(N)[i]]])
+}
+
+
+
 ### Save data ------------------------------------
 ### data folders
 if (!dir.exists('data')) 
@@ -58,6 +67,6 @@ writexl::write_xlsx(df.ls,
   path = "data/xls/raw-data2.xlsx")
 
 ### Clean environment ----------------------------
-# rm(list = ls())
+rm(list = ls())
 
 
