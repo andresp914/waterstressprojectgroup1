@@ -172,53 +172,85 @@ b
 ## Statistical analysis - Descriptive analysis (Centered and deviation measures) for plant height.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-species <- "Amaranthus retroflexus"
-source("rmd/Analysis.R")
-st.ph
-st.sh
-st.ln
-st.cc
-st.afw
-st.adw
-st.rl
-st.rfw
-st.rdw
+p.value.ph <- numeric()
+l <- levels(as.factor(datab$Species))
+# l <- l[-which(l=="Avena fatua")]
+l <- l[-which(l=="Erigeron annuus")]
+# l <- l[-which(l=="Triticum aestivum")]
+for(i in l) {
+  d <- datab[datab$Species==i,]
+  d <- d[!is.na(d$Week),]
+  model.aov <- 
+    aov(Plant_height ~ Treatment * Week +                        Error(PlantId/(Treatment*Week)),data=d)
+  s <- summary(model.aov)
+  p.value.ph <- c(p.value.ph, 
+                  s[[1]][[1]]$`Pr(>F)`[1])
+}
 
-variable <- st.ph$Mean.Plant.Height
-source("rmd/ANOVAmodel.R")
-an.ph
+p.value.sh <- numeric()
+l <- levels(as.factor(datab$Species))
+l <- l[-which(l=="Erigeron annuus")]
+for(i in l) {
+  d <- datab[datab$Species==i,]
+  d <- d[!is.na(d$Week),]
+  model.aov <- 
+    aov(Soil_humidity ~ Treatment * Week +                        Error(PlantId/(Treatment*Week)),data=d)
+  s1 <- summary(model.aov)
+  p.value.sh <- c(p.value.sh, 
+                  s1[[1]][[1]]$`Pr(>F)`[1])
+}
 
-variable <- st.sh$Mean.Soil.Humidity
-source("rmd/ANOVAmodel.R")
-an.sh
+list.pvalues <- data.frame(l,p.value.ph,p.value.sh)
 
-variable <- st.ln$Mean.Leaf.Number
-source("rmd/ANOVAmodel.R")
-an.ln
 
-variable <- st.cc$Mean.Chlorophyll.Content
-source("rmd/ANOVAmodel.R")
-an.cc
-
-variable <- st.afw$Mean.Aerial.Fresh.Weight
-source("rmd/ANOVAmodel.R")
-an.afw
-
-variable <- st.adw$Mean.Aerial.Dry.Weight
-source("rmd/ANOVAmodel.R")
-an.adw
-
-variable <- st.rl$Mean.Root.Length
-source("rmd/ANOVAmodel.R")
-an.rl
-
-variable <- st.rfw$Mean.Roots.Fresh.Weight
-source("rmd/ANOVAmodel.R")
-an.rfw
-
-variable <- st.rdw$Mean.Roots.Dry.Weight
-source("rmd/ANOVAmodel.R")
-an.rdw
+# species <- "Amaranthus retroflexus"
+# 
+# source("rmd/Analysis.R")
+# st.ph
+# st.sh
+# st.ln
+# st.cc
+# st.afw
+# st.adw
+# st.rl
+# st.rfw
+# st.rdw
+# 
+# variable <- st.ph$Mean.Plant.Height
+# source("rmd/ANOVAmodel.R")
+# an.ph
+# 
+# variable <- st.sh$Mean.Soil.Humidity
+# source("rmd/ANOVAmodel.R")
+# an.sh
+# 
+# variable <- st.ln$Mean.Leaf.Number
+# source("rmd/ANOVAmodel.R")
+# an.ln
+# 
+# variable <- st.cc$Mean.Chlorophyll.Content
+# source("rmd/ANOVAmodel.R")
+# an.cc
+# 
+# variable <- st.afw$Mean.Aerial.Fresh.Weight
+# source("rmd/ANOVAmodel.R")
+# an.afw
+# 
+# variable <- st.adw$Mean.Aerial.Dry.Weight
+# source("rmd/ANOVAmodel.R")
+# an.adw
+# 
+# variable <- st.rl$Mean.Root.Length
+# source("rmd/ANOVAmodel.R")
+# an.rl
+# 
+# variable <- st.rfw$Mean.Roots.Fresh.Weight
+# source("rmd/ANOVAmodel.R")
+# an.rfw
+# 
+# variable <- st.rdw$Mean.Roots.Dry.Weight
+# source("rmd/ANOVAmodel.R")
+# an.rdw
 ```
 
 # Discussion
