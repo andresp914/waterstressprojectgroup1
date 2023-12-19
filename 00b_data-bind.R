@@ -21,6 +21,14 @@ if (length(data2023$Group) > 0)
   data2023$PlantId <- 
     paste0(data2023$PlantId, "_23")
 
+### Fixing variables -----------------------------
+#names(data2022)
+#names(data2023)
+data2022 <- data2022[-length(data2022)]
+data2023 <- data2023[-length(data2023)]
+data2022$Infloresence_number <- NA 
+all(names(data2022)==names(data2023))
+
 ### Join data frames -----------------------------
 dl <- ls(pattern = "data")
 datab <- rbind(get(dl[2]), get(dl[1]))
@@ -86,3 +94,4 @@ writexl::write_xlsx(df.ls,
 
 ### Clean environment ----------------------------
 # rm(list = ls())
+
