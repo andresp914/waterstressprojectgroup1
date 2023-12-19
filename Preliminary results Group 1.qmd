@@ -175,292 +175,50 @@ b
 species <- "Amaranthus retroflexus"
 source("rmd/Analysis.R")
 st.ph
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for plant height.
-
-For the variable plant height, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for soil humidity.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.sh <- datab %>%
-  filter(!is.na(Soil_humidity)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Soil.Humidity = mean(Soil_humidity),
-            Median.Soil.Humidity = median(Soil_humidity),
-            Variance.Soil.Humidity = var(Soil_humidity),
-            Standard.Deviation.Soil.Humidity = sd(Soil_humidity))
-```
-
-```{r}
 st.sh
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for soil humidity.
-
-For the variable soil humidity, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.sh <- st.sh %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-ansh <- aov(formula = st.sh$Mean.Soil.Humidity ~ st.sh$SpeciesTreatment)
-ansh
-
-hsdsh <- HSD.test(ansh, trt="st.sh$SpeciesTreatment")
-hsdsh
-
-krsh <- agricolae::kruskal(st.sh$Mean.Soil.Humidity,trt=st.sh$SpeciesTreatment)
-krsh
-
-shsh <- shapiro.test(ansh$residuals)
-shsh
-```
-
-```{r}
-krsh[5]
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for leaf number.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.ln <- datab %>%
-  filter(!is.na(Leaf_number)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Leaf.Number = mean(Leaf_number),
-            Median.Leaf.Number = median(Leaf_number),
-            Variance.Leaf.Number = var(Leaf_number),
-            Standard.Deviation.Leaf.Number = sd(Leaf_number))
-
-```
-
-```{r}
 st.ln
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for leaf number.
-
-For the variable leaf number, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.ln <- st.ln %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-anln <- aov(formula = st.ln$Mean.Leaf.Number ~ st.ln$SpeciesTreatment)
-anln
-
-hsdln <- HSD.test(anln, trt="st.ln$SpeciesTreatment")
-hsdln
-
-krln <- agricolae::kruskal(st.ln$Mean.Leaf.Number,trt=st.ln$SpeciesTreatment)
-krln
-
-shln <- shapiro.test(anln$residuals)
-shln
-```
-
-```{r}
-krln[5]
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for chlorophyll content.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.cc <- datab %>%
-  filter(!is.na(Chlorophyll_content)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Chlorophyll.Content = mean(Chlorophyll_content),
-            Median.Chlorophyll.Content = median(Chlorophyll_content),
-            Variance.Chlorophyll.Content = var(Chlorophyll_content),
-            Standard.Deviation.Chlorophyll.Content = sd(Chlorophyll_content))
-
-```
-
-```{r}
 st.cc
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for chlorophyll content.
-
-For the variable chlorophyll content, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.cc <- st.cc %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-ancc <- aov(formula = st.cc$Mean.Chlorophyll.Content ~ st.cc$SpeciesTreatment)
-ancc
-
-hsdcc <- HSD.test(ancc, trt="st.cc$SpeciesTreatment")
-hsdcc
-
-krcc <- agricolae::kruskal(st.cc$Mean.Chlorophyll.Content,trt=st.cc$SpeciesTreatment)
-krcc
-
-shcc <- shapiro.test(ancc$residuals)
-shcc
-```
-
-```{r}
-krcc[5]
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for aerial fresh weight.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.afw <- datab %>%
-  filter(!is.na(Aerial_fresh_weight)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Aerial.Fresh.Weight = mean(Aerial_fresh_weight),
-            Median.Aerial.Fresh.Weight = median(Aerial_fresh_weight),
-            Variance.Aerial.Fresh.Weight = var(Aerial_fresh_weight),
-            Standard.Deviation.Aerial.Fresh.Weight = sd(Aerial_fresh_weight))
-
-```
-
-```{r}
 st.afw
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for aerial fresh weight.
-
-For the variable aerial fresh weight, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.afw <- st.afw %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-anafw <- aov(formula = st.afw$Mean.Aerial.Fresh.Weight ~ st.afw$SpeciesTreatment)
-anafw
-
-hsdafw <- HSD.test(anafw, trt="st.afw$SpeciesTreatment")
-hsdafw
-
-krafw <- agricolae::kruskal(st.afw$Mean.Aerial.Fresh.Weight,trt=st.afw$SpeciesTreatment)
-krafw
-
-shafw <- shapiro.test(anafw$residuals)
-shafw
-```
-
-```{r}
-krafw[5]
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for aerial dry weight.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.adw <- datab %>%
-  filter(!is.na(Aerial_dry_weight)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Aerial.Dry.Weight = mean(Aerial_dry_weight),
-            Median.Aerial.Dry.Weight = median(Aerial_dry_weight),
-            Variance.Aerial.Dry.Weight = var(Aerial_dry_weight),
-            Standard.Deviation.Aerial.Dry.Weight = sd(Aerial_dry_weight))
-```
-
-```{r}
 st.adw
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for root length.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.rl <- datab %>%
-  filter(!is.na(Root_length)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Root.Length = mean(Root_length),
-            Median.Root.Length = median(Root_length),
-            Variance.Root.Length = var(Root_length),
-            Standard.Deviation.Root.Length = sd(Root_length))
-
-```
-
-```{r}
 st.rl
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for root length.
-
-For the variable root length, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.rl <- st.rl %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-anrl <- aov(formula = st.rl$Mean.Root.Length ~ st.rl$SpeciesTreatment)
-anrl
-
-hsdrl <- HSD.test(anrl, trt="st.rl$SpeciesTreatment")
-hsdrl
-
-krrl <- agricolae::kruskal(st.rl$Mean.Root.Length,trt=st.rl$SpeciesTreatment)
-krrl
-
-shrl <- shapiro.test(anrl$residuals)
-shrl
-```
-
-```{r}
-krrl[5]
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for roots fresh weight.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.rfw <- datab %>%
-  filter(!is.na(Roots_fresh_weight)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Roots.Fresh.Weight = mean(Roots_fresh_weight),
-            Median.Roots.Fresh.Weight = median(Roots_fresh_weight),
-            Variance.Roots.Fresh.Weight = var(Roots_fresh_weight),
-            Standard.Deviation.Roots.Fresh.Weight = sd(Roots_fresh_weight))
-```
-
-```{r}
 st.rfw
-```
-
-Statistical Analyis - ANOVA, Tukey HSD and Kruskal-Wallis for roots fresh weight.
-
-For the variable roots fresh weight, since the residuals were not normal (p-value\<0.05 in the Shapiro-Wilk test), only the results for the non-parametric test Kruskal-Wallis are shown.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
-st.rfw <- st.rfw %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
-  
-anrfw <- aov(formula = st.rfw$Mean.Roots.Fresh.Weight ~ st.rfw$SpeciesTreatment)
-anrfw
-
-hsdrfw <- HSD.test(anrfw, trt="st.rfw$SpeciesTreatment")
-hsdrfw
-
-krrfw <- agricolae::kruskal(st.rfw$Mean.Roots.Fresh.Weight,trt=st.rfw$SpeciesTreatment)
-krrfw
-
-shrfw <- shapiro.test(anrfw$residuals)
-shrfw
-```
-
-```{r}
-krrfw[5]
-```
-
-Statistical analysis - Descriptive analysis (Centered and deviation measures) for roots dry weight.
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-st.rdw <- datab %>%
-  filter(!is.na(Roots_dry_weight)) %>%
-  group_by(Species,Treatment,Week) %>%
-  summarise(Mean.Roots.Dry.Weight = mean(Roots_dry_weight),
-            Median.Roots.Dry.Weight = median(Roots_dry_weight),
-            Variance.Roots.Dry.Weight = var(Roots_dry_weight),
-            Standard.Deviation.Roots.Dry.Weight = sd(Roots_dry_weight))
-```
-
-```{r}
 st.rdw
+
+variable <- st.ph$Mean.Plant.Height
+source("rmd/ANOVAmodel.R")
+an.ph
+
+variable <- st.sh$Mean.Soil.Humidity
+source("rmd/ANOVAmodel.R")
+an.sh
+
+variable <- st.ln$Mean.Leaf.Number
+source("rmd/ANOVAmodel.R")
+an.ln
+
+variable <- st.cc$Mean.Chlorophyll.Content
+source("rmd/ANOVAmodel.R")
+an.cc
+
+variable <- st.afw$Mean.Aerial.Fresh.Weight
+source("rmd/ANOVAmodel.R")
+an.afw
+
+variable <- st.adw$Mean.Aerial.Dry.Weight
+source("rmd/ANOVAmodel.R")
+an.adw
+
+variable <- st.rl$Mean.Root.Length
+source("rmd/ANOVAmodel.R")
+an.rl
+
+variable <- st.rfw$Mean.Roots.Fresh.Weight
+source("rmd/ANOVAmodel.R")
+an.rfw
+
+variable <- st.rdw$Mean.Roots.Dry.Weight
+source("rmd/ANOVAmodel.R")
+an.rdw
 ```
 
 # Discussion

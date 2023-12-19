@@ -1,15 +1,12 @@
-st.ph <- st.ph %>%
-tidyr::unite("SpeciesTreatment",Species:Treatment, remove=FALSE)
+an.ph <- aov(formula = variable ~ st.ph$Treatment)
+an.sh <- aov(formula = variable ~ st.sh$Treatment)
+an.ln <- aov(formula = variable ~ st.ln$Treatment)
+an.cc <- aov(formula = variable ~ st.cc$Treatment)
+an.afw <- aov(formula = variable ~ st.afw$Treatment)
+an.adw <- aov(formula = variable ~ st.adw$Treatment)
+an.rl <- aov(formula = variable ~ st.rl$Treatment)
+an.rfw <- aov(formula = variable ~ st.rfw$Treatment)
+an.rdw <- aov(formula = variable ~ st.rdw$Treatment)
 
-anph <- aov(formula = st.ph$Mean.Plant.Height ~ st.ph$SpeciesTreatment)
-anph
 
-# hsdph <- HSD.test(anph, trt="st.ph$SpeciesTreatment")
-# hsdph
-
-krph <- agricolae::kruskal(st.ph$Mean.Plant.Height,trt=st.ph$SpeciesTreatment)
-krph
-
-shph <- shapiro.test(anph$residuals)
-shph
 
