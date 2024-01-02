@@ -197,56 +197,89 @@ for(i in l) {
   p.value.ln <- c(p.value.ln, 
                   s2[[1]][[1]]$`Pr(>F)`[1])
 }
-list.pvalues <- data.frame(l,p.value.ph,p.value.ln)
 
-# species <- "Amaranthus retroflexus"
-# 
-# source("rmd/Analysis.R")
-# st.ph
-# st.sh
-# st.ln
-# st.cc
-# st.afw
-# st.adw
-# st.rl
-# st.rfw
-# st.rdw
-# 
-# variable <- st.ph$Mean.Plant.Height
-# source("rmd/ANOVAmodel.R")
-# an.ph
-# 
-# variable <- st.sh$Mean.Soil.Humidity
-# source("rmd/ANOVAmodel.R")
-# an.sh
-# 
-# variable <- st.ln$Mean.Leaf.Number
-# source("rmd/ANOVAmodel.R")
-# an.ln
-# 
-# variable <- st.cc$Mean.Chlorophyll.Content
-# source("rmd/ANOVAmodel.R")
-# an.cc
-# 
-# variable <- st.afw$Mean.Aerial.Fresh.Weight
-# source("rmd/ANOVAmodel.R")
-# an.afw
-# 
-# variable <- st.adw$Mean.Aerial.Dry.Weight
-# source("rmd/ANOVAmodel.R")
-# an.adw
-# 
-# variable <- st.rl$Mean.Root.Length
-# source("rmd/ANOVAmodel.R")
-# an.rl
-# 
-# variable <- st.rfw$Mean.Roots.Fresh.Weight
-# source("rmd/ANOVAmodel.R")
-# an.rfw
-# 
-# variable <- st.rdw$Mean.Roots.Dry.Weight
-# source("rmd/ANOVAmodel.R")
-# an.rdw
+list.pvalues <- data.frame(l,p.value.ph,p.value.ln)
+list.pvalues
+
+# The following code was created for calculating the one way ANOVA for the variables that were measured just once. A table was created with all the p values for each species for each variable.
+
+d <- datab %>%
+  filter(!is.na(Chlorophyll_content),Week=="W6") %>%
+  filter(!is.na(Aerial_fresh_weight),Week=="W6") %>%
+  filter(!is.na(Aerial_dry_weight),Week=="W6") %>%
+  filter(!is.na(Roots_fresh_weight),Week=="W6") %>%
+  filter(!is.na(Roots_dry_weight),Week=="W6") %>%
+  filter(!is.na(Root_length),Week=="W6")
+
+p.value.cc <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Chlorophyll_content~d1$Treatment,data=d1)
+  s3 <- summary(model.aov)
+  p.value.cc <- c(p.value.cc, 
+                  s3[[1]][["Pr(>F)"]][1])
+}
+
+p.value.afw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Aerial_fresh_weight~d1$Treatment,data=d1)
+  s4 <- summary(model.aov)
+  p.value.afw <- c(p.value.afw, 
+                  s4[[1]][["Pr(>F)"]][1])
+}
+
+p.value.adw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Aerial_dry_weight~d1$Treatment,data=d1)
+  s5 <- summary(model.aov)
+  p.value.adw <- c(p.value.adw, 
+                   s5[[1]][["Pr(>F)"]][1])
+}
+
+p.value.rfw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Roots_fresh_weight~d1$Treatment,data=d1)
+  s6 <- summary(model.aov)
+  p.value.rfw <- c(p.value.rfw, 
+                   s6[[1]][["Pr(>F)"]][1])
+}
+
+p.value.rdw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Roots_dry_weight~d1$Treatment,data=d1)
+  s7 <- summary(model.aov)
+  p.value.rdw <- c(p.value.rdw, 
+                   s7[[1]][["Pr(>F)"]][1])
+}
+
+p.value.rl <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Root_length~d1$Treatment,data=d1)
+  s8 <- summary(model.aov)
+  p.value.rl <- c(p.value.rl, 
+                   s8[[1]][["Pr(>F)"]][1])
+}
+
+list.pvalues1 <- data.frame(l,p.value.cc,p.value.afw,p.value.adw,p.value.rfw,p.value.rdw,p.value.rl)
+list.pvalues1
+
 ```
 
 # Discussion
