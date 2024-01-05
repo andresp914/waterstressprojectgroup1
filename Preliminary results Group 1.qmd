@@ -110,7 +110,6 @@ g
 
 Chlorophyll content
 
-
 ```{r fig-cc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
 variables <- "Chlorophyll_content"
@@ -281,6 +280,40 @@ list.pvalues1 <- data.frame(l,p.value.cc,p.value.afw,p.value.adw,p.value.rfw,p.v
 list.pvalues1
 
 ```
+
+##PCA
+```{r}
+library(dplyr)
+newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
+#create two variables to group dry and fresh weight for aerial and roots
+newdata$Aerial_Water_Content <- (newdata$Aerial_fresh_weight - newdata$Aerial_dry_weight)  #add new variable to the table
+newdata$Root_Water_Content <- (newdata$Roots_fresh_weight - newdata$Roots_dry_weight)
+pcadata <- newdata[c(4,6,7,11,12,16,19,24,25)]
+
+#826:960,1171:1212,1423:1464,1675:1716,1927:1968,2179:2220
+#stress.pca <-datab %>% select(4,11,16,19)
+#biplot(stress.pca$Plant_height,stress.pca$Chlorophyll_content)
+#library(vegan)
+#my.rda <- rda(stress.pca$Plant_height,stress.pca$Chlorophyll_content)
+#biplot(my.rda)
+#biplot(my.rda,
+       #display = c("Use", "Species"),
+       #type = c("points", "text"))
+#make basic plot
+#biplot(my.rda,
+     #  display = c("sites", "species"),
+      # type = c("text", "points"))
+
+#ordihull(my.rda,
+ #        group = stress.pca$Species,
+  #       col = c(1:16))
+
+
+#Add legend
+#legend("topright",
+ #      col = c(1:16), 
+```
+
 
 # Discussion
 
