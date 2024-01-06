@@ -282,23 +282,19 @@ list.pvalues1
 ```
 
 ##PCA
-#ERROR TO FIX: 
-Quitting from lines 287-358 [unnamed-chunk-3] (Preliminary-results-Group-1.rmarkdown)
-Error in `colMeans()`:
-! 'x' debe ser numérico
 ```{r}
 library(dplyr)
 newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
 #create two variables for the water content for aerial and root
 newdata$Aerial_Water_Content <- (newdata$Aerial_fresh_weight - newdata$Aerial_dry_weight)  #add new variable to the table
 newdata$Root_Water_Content <- (newdata$Roots_fresh_weight - newdata$Roots_dry_weight)
-pcadata <- newdata[c(4:7,11,12,16,19,24,25)]
-#ERROR CHECK Variable instead of root water content
-#install.packages("corrr")
+pcadata <- newdata[c(4:7,11,12,16,19,27,28)]
+
+install.packages("corrr")
 library('corrr')
-#install.packages("ggcorrplot")
+install.packages("ggcorrplot")
 library(ggcorrplot)
-#install.packages("FactoMineR")
+install.packages("FactoMineR")
 library("FactoMineR")
 #show data
 str(pcadata)
@@ -310,55 +306,52 @@ pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
 str(pcadata)
 #Normalizing data
 numerical_data <- pcadata[,5:10]
-#error in line above
 head(numerical_data)
 data_normalized <- scale(numerical_data)#scale fuction applied
 head(data_normalized)
 
 corr_matrix <- cor(data_normalized)
-ggcorrplot(corr_matrix)#displays a correlation matrix NOT VISUAL
+ggcorrplot(corr_matrix)#displays a correlation matrix 
 #...working
 data.pca <- princomp(corr_matrix)
 summary(data.pca)
 
 data.pca$loadings[, 1:2]
 
-#install.packages("factoextra")
+install.packages("factoextra")
 library(factoextra)
 fviz_eig(data.pca, addlabels = TRUE)
-pca1 <- fviz_pca_var(data.pca, col.var = "black")
 pca1
 fviz_cos2(data.pca, choice = "var", axes = 1:2)
 pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
-            gradient.cols = c("red", "purple", "blue"), #chosen gradient
-            repel = TRUE,
-            display = c("Use", "Species"), #display other variables
-            type = c("points", "text")) #how to display them
+            gradient.cols = c("darkred", "purple", "blue"),
+            repel = TRUE)
 pca2
-#last part does not display Use and species
-
-library(vegan)
-
-plot.pca <- rda(pcadata[5:10])
-
-plottedpca <- biplot(plot.pca,
-     display = c("sites", "species"),
-     type = c("text", "points"))
-#need to tidy the veganplot
-##NOT WORKING
-#ordihull(vegan.pca,
-         #group = pcadata$Species)
-
-#ordihull(veganplot,
-      #   group = pcadata$Species,
-       #  col = c(1:16))
-#Add legend
-#legend("topright",
-      # col = c(1:16)) 
 
 ##TRASH?
- 
+#stress.pca <-datab %>% select(4,11,16,19)
+#biplot(stress.pcalotscores(pcadstress.atpcores(pcadata$Plant_height,pcadata$Chlorophyll_content)
+#library(vegan)
+#my.rda <- rda(stress.pca$Plant_height,stress.pca$Chlorophyll_content)
+#biplot(my.rda)
+#biplot(my.rda,
+       #display = c("Use", "Species"),
+       #type = c("points", "text"))
+#make basic plot
+#biplot(my.rda,
+     #  display = c("sites", "species"),
+      # type = c("text", "points"))
+
+#ordihull(my.rda,
+ #        group = stress.pca$Species,
+  #       col = c(1:16))
+
+
+#Add legend
+#legend("topright",
+ #      col = c(1:16), 
 ```
+
 
 # Discussion
 
