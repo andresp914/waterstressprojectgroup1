@@ -301,9 +301,11 @@ str(pcadata)
 #check for empty values
 colSums(is.na(pcadata))
 #ATM only aerial water content and root water content are available for the PCA-------------DATA SHOULD BE FIXED!!
-
+#Working
+mutate_all(pcadata(5:10), ~replace(pcadata, is.na(pcadata), 0)) #to change NA to 0
+str(pcadata)
 #Normalizing data
-numerical_data <- pcadata[,5,8,9,10]
+numerical_data <- pcadata[,5:10]
 head(numerical_data)
 data_normalized <- scale(numerical_data)#scale fuction applied
 head(data_normalized)
@@ -311,7 +313,7 @@ head(data_normalized)
 corr_matrix <- cor(data_normalized)
 ggcorrplot(corr_matrix)#displays a correlation matrix NOT VISUAL
 #...working
-#data.pca <- princomp(corr_matrix)
+data.pca <- princomp(corr_matrix)
 #summary(data.pca)
 
 ##TRASH?
