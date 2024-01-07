@@ -327,28 +327,20 @@ pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
             repel = TRUE)
 pca2
 
-##TRASH?
-#stress.pca <-datab %>% select(4,11,16,19)
-#biplot(stress.pcalotscores(pcadstress.atpcores(pcadata$Plant_height,pcadata$Chlorophyll_content)
-#library(vegan)
-#my.rda <- rda(stress.pca$Plant_height,stress.pca$Chlorophyll_content)
-#biplot(my.rda)
-#biplot(my.rda,
-       #display = c("Use", "Species"),
-       #type = c("points", "text"))
-#make basic plot
-#biplot(my.rda,
-     #  display = c("sites", "species"),
-      # type = c("text", "points"))
+#pca dots IN PROGRESS NOT WORKING
 
-#ordihull(my.rda,
- #        group = stress.pca$Species,
-  #       col = c(1:16))
+#ggplot(pcadata, aes(x=PC1, y=PC2, color=Species)) + geom_point())
 
+#library(ggplot2)
+#pcadata <- as.numeric(as.factor(pcadata))
+#pcadata <- prcomp(pcadata[c(1:10)], scale.=T)
 
-#Add legend
-#legend("topright",
- #      col = c(1:16), 
+#df$PC1 <- pcadata$x[,1]
+#df$PC2 <- pcadata$x[,2]
+#df$species <- pcadata$Species
+
+#ggplot(df, aes(x=PC1, y=PC2, color=species)) + geom_point()
+
 ```
 
 
