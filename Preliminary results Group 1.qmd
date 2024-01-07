@@ -313,7 +313,7 @@ head(data_normalized)
 
 corr_matrix <- cor(data_normalized)
 ggcorrplot(corr_matrix,
-           colors = c("darkred", "purple", "blue"))
+           colors = c("pink", "purple", "darkred"))
 #displays a correlation matrix 
 data.pca <- princomp(corr_matrix)
 summary(data.pca)
@@ -324,7 +324,7 @@ install.packages("factoextra")
 library(factoextra)
 fviz_cos2(data.pca, choice = "var", axes = 1:2)
 pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
-            gradient.cols = c("darkred", "purple", "blue"),
+            gradient.cols = c("pink", "purple", "darkred"),
             repel = TRUE)
 pca2
 
