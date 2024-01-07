@@ -282,6 +282,7 @@ list.pvalues1
 ```
 
 ##PCA
+
 ```{r}
 library(dplyr)
 newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
@@ -342,7 +343,6 @@ pca2
 #ggplot(df, aes(x=PC1, y=PC2, color=species)) + geom_point()
 
 ```
-
 
 # Discussion
 
