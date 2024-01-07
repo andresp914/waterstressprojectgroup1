@@ -281,7 +281,7 @@ list.pvalues1
 
 ```
 
-##PCA
+### PCA
 
 ```{r}
 library(dplyr)
@@ -329,18 +329,30 @@ pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
 pca2
 
 #pca dots IN PROGRESS NOT WORKING
+# structure of the iris 
+# dataset 
+str(pcadata) 
+  
+# print the data.pca dataset 
+head(pcadata)
+data.pca <- prcomp(pcadata[,c(5:10)], 
+                   center = TRUE, 
+                   scale. = TRUE) 
+  
+# summary of the  
+# prcomp object 
+summary(data.pca)
 
-#ggplot(pcadata, aes(x=PC1, y=PC2, color=Species)) + geom_point())
+# structure of the pca object 
+str(data.pca) 
+#plotting pca
+install.packages("ggfortify")
+library(ggfortify) 
+stress.pca.plot <- autoplot(data.pca, 
+                          data = pcadata, 
+                          colour = 'Species') 
+stress.pca.plot
 
-#library(ggplot2)
-#pcadata <- as.numeric(as.factor(pcadata))
-#pcadata <- prcomp(pcadata[c(1:10)], scale.=T)
-
-#df$PC1 <- pcadata$x[,1]
-#df$PC2 <- pcadata$x[,2]
-#df$species <- pcadata$Species
-
-#ggplot(df, aes(x=PC1, y=PC2, color=species)) + geom_point()
 
 ```
 
