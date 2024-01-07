@@ -324,7 +324,7 @@ install.packages("factoextra")
 library(factoextra)
 fviz_cos2(data.pca, choice = "var", axes = 1:2)
 pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
-            gradient.cols = c("pink", "purple", "darkred"),
+            gradient.cols = c("darkred", "purple", "pink"),
             repel = TRUE)
 pca2
 
