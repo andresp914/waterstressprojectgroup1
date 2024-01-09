@@ -74,6 +74,9 @@ library(agricolae)
 datab$Week1 <- as.factor(datab$Week)
 datab$Soil_humidity <-  as.numeric(datab$Soil_humidity)
 datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflexus" 
+#add variable of water content to the table
+datab$Aerial_Water_Content <- (datab$Aerial_fresh_weight - datab$Aerial_dry_weight) 
+datab$Root_Water_Content <- (datab$Roots_fresh_weight - datab$Roots_dry_weight)
 ```
 
 Plant height
@@ -164,6 +167,24 @@ Roots dry weight
 #| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
 variables <- "Roots_dry_weight"
 variablesname <- "Roots dry weight (g)"
+source("rmd/boxplot.R")
+b
+```
+
+Aerial water content
+```{r fig-awc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Aerial_Water_Content"
+variablesname <- "Aerial Water Content (g)"
+source("rmd/boxplot.R")
+b
+```
+
+Root water content
+```{r fig-rwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+variables <- "Root_Water_Content"
+variablesname <- "Root Water Content (g)"
 source("rmd/boxplot.R")
 b
 ```
