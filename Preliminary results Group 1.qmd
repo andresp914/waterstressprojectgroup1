@@ -281,7 +281,7 @@ list.pvalues1
 
 ```
 
-### PCA
+### PCA J
 
 ```{r}
 library(dplyr)
