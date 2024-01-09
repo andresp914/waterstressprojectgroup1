@@ -35,7 +35,7 @@ The aim of this project is to compare several morphophysiological variables of 1
 
 # Objectives and hypothesis
 
-Objective: To compare the effect of different levels of water stress on physiological variables of a set of plant species.
+Objective: To compare the effect of different levels of water stress on physiological variables of a set of cultivated and wild plant species.
 
 Hypothesis: The effect of water stress on the physiological variables of weed species will exhibit a better adaptation to water stress than the crop species.
 
@@ -71,6 +71,7 @@ load("data/bound-data.Rdata")
 # install.packages("FactoMineR")
 # install.packages("factoextra")
 # install.packages("ggfortify")
+# install.packages("kableExtra")
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -81,12 +82,16 @@ library(ggcorrplot)
 library("FactoMineR")
 library(factoextra)
 library(ggfortify) 
+library("kableExtra")
 
 # Convert Week to a factor
 datab$Week1 <- as.factor(datab$Week)
 datab$Soil_humidity <-  as.numeric(datab$Soil_humidity)
 datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflexus" 
-datab$Species[datab$Species=="Beta vulgaris "] <- "Beta vulgaris" 
+datab$Species[datab$Species=="Beta vulgaris "] <- "Beta vulgaris"
+datab$Use[datab$Species=="Chenopodium album"] <- "wild" 
+datab$Chlorophyll_content[datab$Chlorophyll_content=="211.4"] <- "21.4"
+
 #add variable of water content to the table
 datab$Aerial_Water_Content <- (datab$Aerial_fresh_weight - datab$Aerial_dry_weight) 
 datab$Root_Water_Content <- (datab$Roots_fresh_weight - datab$Roots_dry_weight)
@@ -324,8 +329,12 @@ for(i in l) {
 }
 
 list.pvalues <- data.frame(l,p.value.ph,p.value.ln)
-list.pvalues
-
+list.pvalues %>%
+  kbl() %>%
+  column_spec(2, bold = ifelse(list.pvalues$p.value.ph < 0.05, TRUE, FALSE)) %>%
+  column_spec(3, bold = ifelse(list.pvalues$p.value.ln < 0.05, TRUE, FALSE)) %>% 
+  kable_styling()
+  
 # The following code was created for calculating the one way ANOVA for the variables that were measured just once. A table was created with all the p values for each species for each variable.
 
 d <- datab %>%
@@ -403,8 +412,16 @@ for(i in l) {
 }
 
 list.pvalues1 <- data.frame(l,p.value.cc,p.value.afw,p.value.adw,p.value.rfw,p.value.rdw,p.value.rl)
-list.pvalues1
 
+list.pvalues1 %>%
+  kbl() %>%
+  column_spec(2, bold = ifelse(list.pvalues1$p.value.cc < 0.05, TRUE, FALSE)) %>%
+  column_spec(3, bold = ifelse(list.pvalues1$p.value.afw < 0.05, TRUE, FALSE)) %>%
+  column_spec(4, bold = ifelse(list.pvalues1$p.value.adw < 0.05, TRUE, FALSE)) %>%
+  column_spec(5, bold = ifelse(list.pvalues1$p.value.rfw < 0.05, TRUE, FALSE)) %>%
+  column_spec(6, bold = ifelse(list.pvalues1$p.value.rdw < 0.05, TRUE, FALSE)) %>%
+  column_spec(7, bold = ifelse(list.pvalues1$p.value.rl < 0.05, TRUE, FALSE)) %>%
+  kable_styling()
 ```
 
 ### PCA
