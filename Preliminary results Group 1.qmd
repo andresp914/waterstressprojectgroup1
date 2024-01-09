@@ -58,17 +58,29 @@ For each data set containing each one of the assessed variables for all the 15 s
 ```{r, include=FALSE}
 # Load the data
 load("data/bound-data.Rdata")
-
+# Install libraries
 # #install and/or load the necessary libraries
 # #install.packages("ggplot2")
 # #install.packages("dplyr")
 # #install.packages("tidyr")
 # #install.packages("agricolae")
+# #install.packages("dplyr")
+# #install.packages("corrr")
+# #install.packages("ggcorrplot")
+# #install.packages("FactoMineR")
+# #install.packages("FactoMineR")
+# #install.packages("factoextra")
+# #install.packages("ggfortify")
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(agricolae)
-
+library(dplyr)
+library('corrr')
+library(ggcorrplot)
+library("FactoMineR")
+library(factoextra)
+library(ggfortify) 
 
 # Convert Week to a factor
 datab$Week1 <- as.factor(datab$Week)
@@ -172,6 +184,7 @@ b
 ```
 
 Aerial water content
+
 ```{r fig-awc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
 variables <- "Aerial_Water_Content"
@@ -181,6 +194,7 @@ b
 ```
 
 Root water content
+
 ```{r fig-rwc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
 variables <- "Root_Water_Content"
@@ -302,24 +316,14 @@ list.pvalues1
 
 ```
 
-### PCA 
+### PCA
 
 ```{r}
-library(dplyr)
 newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
 #create two variables for the water content for aerial and root
 newdata$Aerial_Water_Content <- (newdata$Aerial_fresh_weight - newdata$Aerial_dry_weight)  #add new variable to the table
 newdata$Root_Water_Content <- (newdata$Roots_fresh_weight - newdata$Roots_dry_weight)
 pcadata <- newdata[c(4:7,11,12,16,19,27,28)]
-
-##install.packages("corrr")
-library('corrr')
-##install.packages("ggcorrplot")
-library(ggcorrplot)
-##install.packages("FactoMineR")
-library("FactoMineR")
-##install.packages("factoextra")
-library(factoextra)
 
 #show data
 str(pcadata)
@@ -376,8 +380,7 @@ summary(data.pca)
 # structure of the pca object 
 str(data.pca) 
 #plotting pca
-#install.packages("ggfortify")
-library(ggfortify) 
+
 stress.pca.plot <- autoplot(data.pca, 
                           data = pcadata, 
                           colour = 'Species') 
