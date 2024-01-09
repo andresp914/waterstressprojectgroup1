@@ -92,115 +92,205 @@ datab$Aerial_Water_Content <- (datab$Aerial_fresh_weight - datab$Aerial_dry_weig
 datab$Root_Water_Content <- (datab$Roots_fresh_weight - datab$Roots_dry_weight)
 ```
 
+```{r}
+wild <- datab %>%
+  filter(Use=="wild")
+lev.wild <- levels(as.factor(wild$Species))
+lev.wild
+
+cult <- datab %>%
+  filter(Use=="cultivated")
+lev.cult <- levels(as.factor(cult$Species))
+lev.cult
+```
+
 Plant height
 
-check @fig-ph (naming chunk to check the figure in text)
+check @fig-phw (naming chunk to check the figure in text)
 
-```{r fig-ph, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablename ," of the 15 plant species under three different water stress conditions.")
+```{r fig-phw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the wild species under three different water stress conditions.")
 variable <- "Plant_height"
 variablename <- "Plant height cm"
-source("rmd/lineplot.R")
+source("rmd/lineplotwild.R")
+g
+```
+check @fig-phc (naming chunk to check the figure in text)
+
+```{r fig-phc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the cultivated species under three different water stress conditions.")
+variable <- "Plant_height"
+variablename <- "Plant height cm"
+source("rmd/lineplotcultivated.R")
 g
 ```
 
 Soil humidity
 
-```{r fig-sh, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablename ," of the 15 plant species under three different water stress conditions.")
+```{r fig-shw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the wild species under three different water stress conditions.")
 variable <- "Soil_humidity"
 variablename <- "Soil humidity"
-source("rmd/lineplot.R")
+source("rmd/lineplotwild.R")
+g
+```
+
+```{r fig-shc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the cultivated species under three different water stress conditions.")
+variable <- "Soil_humidity"
+variablename <- "Soil humidity"
+source("rmd/lineplotcultivated.R")
 g
 ```
 
 Leaf number
 
-```{r fig-ln, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablename ," of the 15 plant species under three different water stress conditions.")
+```{r fig-lnw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the wild species under three different water stress conditions.")
 variable <- "Leaf_number"
 variablename <- "Leaf number"
-source("rmd/lineplot.R")
+source("rmd/lineplotwild.R")
+g
+```
+```{r fig-lnc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the cultivated species under three different water stress conditions.")
+variable <- "Leaf_number"
+variablename <- "Leaf number"
+source("rmd/lineplotcultivated.R")
 g
 ```
 
 Chlorophyll content
 
-```{r fig-cc, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-ccw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Chlorophyll_content"
 variablesname <- "Chlorophyll content (SPAD units)"
 source("rmd/boxplot.R")
 b
 ```
+```{r fig-ccc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Chlorophyll_content"
+variablesname <- "Chlorophyll content (SPAD units)"
+source("rmd/boxplotcult.R")
+b
+```
 
 Aerial fresh weight
 
-```{r fig-afw, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-afww, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Aerial_fresh_weight"
 variablesname <- "Aerial fresh weight (g)"
 source("rmd/boxplot.R")
 b
 ```
-
+```{r fig-afwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Aerial_fresh_weight"
+variablesname <- "Aerial fresh weight (g)"
+source("rmd/boxplotcult.R")
+b
+```
 Aerial dry weight
 
-```{r fig-adw, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-adww, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Aerial_dry_weight"
 variablesname <- "Aerial dry weight (g)"
 source("rmd/boxplot.R")
 b
 ```
-
+```{r fig-adwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Aerial_dry_weight"
+variablesname <- "Aerial dry weight (g)"
+source("rmd/boxplotcult.R")
+b
+```
 Root length
 
-```{r fig-rl, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-rlw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Root_length"
 variablesname <- "Root length (cm)"
 source("rmd/boxplot.R")
 b
 ```
+```{r fig-rlc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Root_length"
+variablesname <- "Root length (cm)"
+source("rmd/boxplotcult.R")
+b
+```
 
 Roots fresh weight
 
-```{r fig-rfw, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-rfww, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Roots_fresh_weight"
 variablesname <- "Roots fresh weight (g)"
 source("rmd/boxplot.R")
 b
 ```
+```{r fig-rfwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Roots_fresh_weight"
+variablesname <- "Roots fresh weight (g)"
+source("rmd/boxplotcult.R")
+b
+```
 
 Roots dry weight
 
-```{r fig-rdw, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-rdww, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Roots_dry_weight"
 variablesname <- "Roots dry weight (g)"
 source("rmd/boxplot.R")
 b
 ```
+```{r fig-rdwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Roots_dry_weight"
+variablesname <- "Roots dry weight (g)"
+source("rmd/boxplotcult.R")
+b
+```
 
 Aerial water content
 
-```{r fig-awc, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-awcw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Aerial_Water_Content"
 variablesname <- "Aerial Water Content (g)"
 source("rmd/boxplot.R")
 b
 ```
+```{r fig-awcc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Aerial_Water_Content"
+variablesname <- "Aerial Water Content (g)"
+source("rmd/boxplotcult.R")
+b
+```
 
 Root water content
 
-```{r fig-rwc, echo=TRUE, message=FALSE, warning=FALSE}
-#| fig-cap: !expr paste("Mean", variablesname, "of the 15 plant species under three different water stress conditions.")
+```{r fig-rwcw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
 variables <- "Root_Water_Content"
 variablesname <- "Root Water Content (g)"
 source("rmd/boxplot.R")
+b
+```
+```{r fig-rwcc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Root_Water_Content"
+variablesname <- "Root Water Content (g)"
+source("rmd/boxplotcult.R")
 b
 ```
 
@@ -320,11 +410,9 @@ list.pvalues1
 ### PCA
 
 ```{r}
-newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
+datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
 #create two variables for the water content for aerial and root
-newdata$Aerial_Water_Content <- (newdata$Aerial_fresh_weight - newdata$Aerial_dry_weight)  #add new variable to the table
-newdata$Root_Water_Content <- (newdata$Roots_fresh_weight - newdata$Roots_dry_weight)
-pcadata <- newdata[c(4:7,11,12,16,19,27,28)]
+pcadata <- datab[c(4:7,11,12,16,19,25,26)]
 
 #show data
 str(pcadata)
@@ -390,17 +478,6 @@ stress.pca.plot
 
 ```
 
-```{r}
-wild <- datab %>%
-  filter(Use=="wild")
-lev.wild <- levels(as.factor(wild$Species))
-lev.wild
-
-cult <- datab %>%
-  filter(Use=="cultivated")
-lev.cult <- levels(as.factor(cult$Species))
-lev.cult
-```
 
 # Discussion
 
