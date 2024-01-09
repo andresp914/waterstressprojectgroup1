@@ -282,11 +282,7 @@ list.pvalues1
 ```
 
 ### PCA
-####Error in `contrib.url()`:
-! trying to use CRAN without setting a mirror
-Backtrace:
- 1. utils::#install.packages("corrr")
- 2. utils::contrib.url(repos, "source")
+
 ```{r}
 library(dplyr)
 newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
