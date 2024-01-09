@@ -59,18 +59,18 @@ For each data set containing each one of the assessed variables for all the 15 s
 # Load the data
 load("data/bound-data.Rdata")
 # Install libraries
-# #install and/or load the necessary libraries
-# #install.packages("ggplot2")
-# #install.packages("dplyr")
-# #install.packages("tidyr")
-# #install.packages("agricolae")
-# #install.packages("dplyr")
-# #install.packages("corrr")
-# #install.packages("ggcorrplot")
-# #install.packages("FactoMineR")
-# #install.packages("FactoMineR")
-# #install.packages("factoextra")
-# #install.packages("ggfortify")
+# install and/or load the necessary libraries
+# install.packages("ggplot2")
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("agricolae")
+# install.packages("dplyr")
+# install.packages("corrr")
+# install.packages("ggcorrplot")
+# install.packages("FactoMineR")
+# install.packages("FactoMineR")
+# install.packages("factoextra")
+# install.packages("ggfortify")
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -86,6 +86,7 @@ library(ggfortify)
 datab$Week1 <- as.factor(datab$Week)
 datab$Soil_humidity <-  as.numeric(datab$Soil_humidity)
 datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflexus" 
+datab$Species[datab$Species=="Beta vulgaris "] <- "Beta vulgaris" 
 #add variable of water content to the table
 datab$Aerial_Water_Content <- (datab$Aerial_fresh_weight - datab$Aerial_dry_weight) 
 datab$Root_Water_Content <- (datab$Roots_fresh_weight - datab$Roots_dry_weight)
@@ -213,7 +214,7 @@ for(i in l) {
   d <- datab[datab$Species==i,]
   d <- d[!is.na(d$Week),]
   model.aov <- 
-    aov(Plant_height ~ Treatment * Week +                        Error(PlantId/(Treatment*Week)),data=d)
+    aov(Plant_height ~ Treatment * Week +                        Error(PlantId/Week),data=d)
   s <- summary(model.aov)
   p.value.ph <- c(p.value.ph, 
                   s[[1]][[1]]$`Pr(>F)`[1])
