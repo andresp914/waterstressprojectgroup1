@@ -59,11 +59,11 @@ For each data set containing each one of the assessed variables for all the 15 s
 # Load the data
 load("data/bound-data.Rdata")
 
-# Install and/or load the necessary libraries
-# install.packages("ggplot2")
-# install.packages("dplyr")
-# install.packages("tidyr")
-# install.packages("agricolae")
+# #install and/or load the necessary libraries
+# #install.packages("ggplot2")
+# #install.packages("dplyr")
+# #install.packages("tidyr")
+# #install.packages("agricolae")
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -285,9 +285,9 @@ list.pvalues1
 ####Error in `contrib.url()`:
 ! trying to use CRAN without setting a mirror
 Backtrace:
- 1. utils::install.packages("corrr")
+ 1. utils::#install.packages("corrr")
  2. utils::contrib.url(repos, "source")
-#```{r}
+```{r}
 library(dplyr)
 newdata <- datab[ which(datab$Week=='W6'), ] #creates subset table with variables for week 6 to make PCA
 #create two variables for the water content for aerial and root
@@ -295,12 +295,15 @@ newdata$Aerial_Water_Content <- (newdata$Aerial_fresh_weight - newdata$Aerial_dr
 newdata$Root_Water_Content <- (newdata$Roots_fresh_weight - newdata$Roots_dry_weight)
 pcadata <- newdata[c(4:7,11,12,16,19,27,28)]
 
-install.packages("corrr")
+##install.packages("corrr")
 library('corrr')
-install.packages("ggcorrplot")
+##install.packages("ggcorrplot")
 library(ggcorrplot)
-install.packages("FactoMineR")
+##install.packages("FactoMineR")
 library("FactoMineR")
+##install.packages("factoextra")
+library(factoextra)
+
 #show data
 str(pcadata)
 #check for empty values
@@ -319,25 +322,25 @@ corr_matrix <- cor(data_normalized)
 ggcorrplot(corr_matrix,
            colors = c("pink", "purple", "darkred"))
 #displays a correlation matrix 
-data.pca <- princomp(corr_matrix)
+#data.pca <- princomp(corr_matrix)
+data.pca <- princomp(data_normalized)
 summary(data.pca)
 
 data.pca$loadings[, 1:2]
 
-install.packages("factoextra")
-library(factoextra)
+
 fviz_cos2(data.pca, choice = "var", axes = 1:2)
 pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
             gradient.cols = c("darkred", "purple", "pink"),
             repel = TRUE)
 pca2
 #error The number of active individuals is different from the length of the factor habillage. Please, remove the supplementary individuals in the variable habillage.
-#pcafinal <- fviz_pca_biplot(data.pca,
-                            #label="var",
-                            #habillage = pcadata$Species, 
-                            #addEllipses=TRUE, 
-                            #ellipse.level=0.95)
-#pcafinal
+pcafinal <- fviz_pca_biplot(data.pca,
+                            label="var",
+                            habillage = pcadata$Use, 
+                            addEllipses=TRUE, 
+                            ellipse.level=0.95)
+pcafinal
 #pca dots IN PROGRESS NOT WORKING
 # structure of the iris 
 # dataset 
@@ -356,7 +359,7 @@ summary(data.pca)
 # structure of the pca object 
 str(data.pca) 
 #plotting pca
-install.packages("ggfortify")
+#install.packages("ggfortify")
 library(ggfortify) 
 stress.pca.plot <- autoplot(data.pca, 
                           data = pcadata, 
