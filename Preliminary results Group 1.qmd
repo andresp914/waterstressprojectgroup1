@@ -390,6 +390,18 @@ stress.pca.plot
 
 ```
 
+```{r}
+wild <- datab %>%
+  filter(Use=="wild")
+lev.wild <- levels(as.factor(wild$Species))
+lev.wild
+
+cult <- datab %>%
+  filter(Use=="cultivated")
+lev.cult <- levels(as.factor(cult$Species))
+lev.cult
+```
+
 # Discussion
 
 The data reveals distinct variations in the development of variables over time and treatment for different species. This section aims to examine the way in which observations differ between species and variables under different water stress scenarios applied over time. Furthermore, it seeks to determine which variables are useful in the analysis and prediction of water stress responses in the selected plants. This determination will depend on the significance found in statistical analysis, as well as trends observed in the plotted graphs.
