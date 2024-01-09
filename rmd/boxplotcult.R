@@ -1,5 +1,5 @@
-wild$variables <- wild[[variables]]
-d <- wild %>%
+cult$variables <- cult[[variables]]
+d <- cult %>%
   filter(!is.na(variables))
 
 b <- ggplot(d, aes(x = Species, y = variables, 

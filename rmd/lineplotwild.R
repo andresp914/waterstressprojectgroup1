@@ -3,8 +3,8 @@ library(dplyr)
 library(tidyr)
 library(agricolae)
 # Group by Species, Treatment, and Week and calculate mean
-datab$variable <- datab[[variable]]
-mean_byweeks <- datab %>%
+wild$variable <- wild[[variable]]
+mean_byweeks <- wild %>%
   group_by(Species, Treatment, Week) %>%
   summarise(Mean = mean(variable))
 
