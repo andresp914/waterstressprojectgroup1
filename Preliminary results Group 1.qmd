@@ -522,6 +522,12 @@ The ANOVA results indicate that aerial fresh weight and aerial dry weight are th
 
 The PCA analysis revealed that root length was most strongly related to aerial and root water content. Additionally, there was a relation between aerial and root water content. While there is a slight relationship between root length and plant height, it is not as significant as the aforementioned variables. There is no significant relation between chlorophyll content and leaf number with the other variables.  Principal Component Analysis (PCA) related to cultivated and wild data showed that both overlapped, but the cultivated data had a stronger effect on the related variables mentioned before. On the other hand, the wild species had a stronger effect on chlorophyll and leaf number.
 
+A further study aimed to identify the most sensitive indicators of drought or salt stress on plant growth, phenology, symbiotic interactions, visual stress symptoms, photosynthetic activity, nutrient composition, and vitality. Three independent pot experiments were conducted. A principal component analysis (PCA) of the pot experiments revealed that leaf area (LA) and plant height (PH) were the most effective physiological characteristics for detecting stress effects (Füzy, 2019).
+
+Without crop competition, *Chenopodium album* is a prolific seed producer and can produce 75,600 to 150,400 seeds plant−1. It has been used as a model weed to study competition with crops like maize. Overall, water stress and *C. album* competition negatively affected the parameters measured in this study; however, the magnitude of reduction is stronger under drought stress than increasing weed competition when water is not limiting (Smith & Burns, 2022).
+
+According to other studies, plants prioritize resource allocation investing in roots during drought, affecting the root–shoot ratio. In order to increase water uptake and influx under drought; supporting uninterrupted plant growth. In the case of *Trifolium* *repens* in drought favour the genotype with increased root weight in proportion to total plant weight by improving: growth, survival, and seed yield(Shoaib et al., 2022).
+
 # Conclusions
 
 There is not a clear trend in the data here analysed. Future studies are recommended including more individuals per species per treatment. Variables such as leaf number and chlorophyll content are not as relevant as root length and the related variables according to the data, to determine drought tolerance. Cultivated and wild species surveyed didn't throw enough significant disimilarities to establish a trend.
@@ -536,13 +542,19 @@ Donaldson, E. (1996). Crop traits for water stress tolerance. In American Journa
 
 Fahad, S., Bajwa, A. A., Nazir, U., Anjum, S. A., Farooq, A., Zohaib, A., et al. (2017). Crop production under drought and heat stress: Plant responses and management options. In Frontiers in Plant Science, 8, 29.
 
+Füzy, A., Kovács, R., Cseresnyés, I., Parádi, I., Szili-Kovács, T., Kelemen, B., Rajkai, K., & Takács, T. (2019). Selection of plant physiological parameters to detect stress effects in pot experiments using principal component analysis. Acta Physiologiae Plantarum, 41(5). https://doi.org/10.1007/s11738-019-2842-9
+
 Ondrasek, G., Rengel, Z., & Veres, S. (2011). Soil Salinisation and Salt Stress in Crop Production. Abiotic Stress in Plants - Mechanisms and Adaptations. InTech. Available at: http://dx.doi.org/10.5772/22248.
 
 Ondrasek, G. (2013). The Responses of Salt-Affected Plants to Cadmium. In P. Ahmad, M. M. Azooz, & M. N. V. Prasad (Eds.), Salt Stress in Plants. Springer, New York, NY. https://doi.org/10.1007/978-1-4614-6108-1_17.
 
 Ondrasek, G. (2014). Water Scarcity and Water Stress in Agriculture. In P. Ahmad & M. Wani (Eds.), Physiological Mechanisms and Adaptation Strategies in Plants Under Changing Environment. Springer, New York, NY. <https://doi.org/10.1007/978-1-4614-8591-9_4>.
 
+Shoaib, M., Banerjee, B. P., Hayden, M., & Kant, S. (2022). Roots' Drought Adaptive Traits in Crop Improvement. Plants (Basel, Switzerland), 11(17), 2256. https://doi.org/10.3390/plants11172256
+
 Singh, M., Thapa, R., Kukal, M. S., Irmak, S., Mirsky, S., & Jhala, A. J. (2022). Effect of Water Stress on Weed Germination, Growth Characteristics, and Seed Production: A Global Meta-Analysis. In Weed Science, 70(6), 621--640. DOI: 10.1017/wsc.2022.59.
+
+Smith, A. M., & Burns, E. E. (2022). Impacts of drought intensity and weed competition on drought-tolerant corn performance. Weed Science, 70(4), 455-462–462. <https://doi.org/10.1017/wsc.2022.34>
 
 Tajinder, K., & Saroj, A. (2021). Environmental Stress Physiology of Plants and Crop Productivity. Bentham Science Publishers Ltd.
 
