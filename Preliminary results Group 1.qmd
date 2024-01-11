@@ -121,6 +121,7 @@ variablename <- "Plant height cm"
 source("rmd/lineplotwild.R")
 g
 ```
+
 check @fig-phc (naming chunk to check the figure in text)
 
 ```{r fig-phc, echo=TRUE, message=FALSE, warning=FALSE}
@@ -158,6 +159,7 @@ variablename <- "Leaf number"
 source("rmd/lineplotwild.R")
 g
 ```
+
 ```{r fig-lnc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablename ," of the cultivated species under three different water stress conditions.")
 variable <- "Leaf_number"
@@ -175,6 +177,7 @@ variablesname <- "Chlorophyll content (SPAD units)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-ccc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Chlorophyll_content"
@@ -192,6 +195,7 @@ variablesname <- "Aerial fresh weight (g)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-afwc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Aerial_fresh_weight"
@@ -199,6 +203,7 @@ variablesname <- "Aerial fresh weight (g)"
 source("rmd/boxplotcult.R")
 b
 ```
+
 Aerial dry weight
 
 ```{r fig-adww, echo=TRUE, message=FALSE, warning=FALSE}
@@ -208,6 +213,7 @@ variablesname <- "Aerial dry weight (g)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-adwc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Aerial_dry_weight"
@@ -215,6 +221,7 @@ variablesname <- "Aerial dry weight (g)"
 source("rmd/boxplotcult.R")
 b
 ```
+
 Root length
 
 ```{r fig-rlw, echo=TRUE, message=FALSE, warning=FALSE}
@@ -224,6 +231,7 @@ variablesname <- "Root length (cm)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-rlc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Root_length"
@@ -241,6 +249,7 @@ variablesname <- "Roots fresh weight (g)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-rfwc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Roots_fresh_weight"
@@ -258,6 +267,7 @@ variablesname <- "Roots dry weight (g)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-rdwc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Roots_dry_weight"
@@ -275,6 +285,7 @@ variablesname <- "Aerial Water Content (g)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-awcc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Aerial_Water_Content"
@@ -292,6 +303,7 @@ variablesname <- "Root Water Content (g)"
 source("rmd/boxplot.R")
 b
 ```
+
 ```{r fig-rwcc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
 variables <- "Root_Water_Content"
@@ -467,7 +479,8 @@ pcafinal <- fviz_pca_biplot(data.pca,
                             label="var",
                             habillage = pcadata$Use,
                             addEllipses=TRUE,
-                            ellipse.level=0.95)
+                            ellipse.level=0.95,
+                            repel = TRUE)
 pcafinal
 #pca dots IN PROGRESS NOT WORKING
 # structure of the iris
@@ -493,7 +506,6 @@ stress.pca.plot <- autoplot(data.pca,
                           colour = 'Species')
 stress.pca.plot
 ```
-
 
 # Discussion
 
