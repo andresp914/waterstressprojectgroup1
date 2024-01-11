@@ -524,7 +524,7 @@ The PCA analysis revealed that root length was most strongly related to aerial a
 
 # Conclusions
 
-There is not a clear trend in the data here analysed. Future studies are recommended including more individuals per species per treatment. Variables such as leaf number and chlorophyll content are not as relevant as root length and the related variables according to the data, to determine drought tolerance. Cultivated and wild species surveyed didn't throw enough significant disimilarities to establish a trend. Other data analysis programs could be used in order to model our data.
+There is not a clear trend in the data here analysed. Future studies are recommended including more individuals per species per treatment. Variables such as leaf number and chlorophyll content are not as relevant as root length and the related variables according to the data, to determine drought tolerance. Cultivated and wild species surveyed didn't throw enough significant disimilarities to establish a trend.
 
 # References
 
