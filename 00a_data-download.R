@@ -67,6 +67,6 @@ writexl::write_xlsx(df.ls,
   path = "data/xls/raw-data2.xlsx")
 
 ### Clean environment ----------------------------
-rm(list = ls())
+# rm(list = ls())
 
 
