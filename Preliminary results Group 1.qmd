@@ -524,9 +524,7 @@ The PCA analysis revealed that root length was most strongly related to aerial a
 
 # Conclusions
 
-The data analyzed in this study allows the identification of differences regarding the adaptive response of wild species in comparison to cultivated species. By exploring morphophysiological variables that are intrinsically linked to water stress tolerance, it was possible to identify that wild species exhibit an adaptive response towards an intermediate level of drought.
-
-Among the assessed variables it has been found out that leaf number and plant height are the most suitable morphophysiological variables for the study of drought stress in the analyzed species, since with such variables it was possible to detect significant differences within the different groups of species and treatments. The species differ in their morphological values also due to their own water tolerance strategy. Further studies should be conducted in order to establish a window of tolerance to water stress, and including other important crop species.
+There is not a clear trend in the data here analysed. Future studies are recommended including more individuals per species per treatment. Variables such as leaf number and chlorophyll content are not as relevant as root length and the related variables according to the data, to determine drought tolerance. Cultivated and wild species surveyed didn't throw enough significant disimilarities to establish a trend. Other data analysis programs could be used in order to model our data.
 
 # References
 
