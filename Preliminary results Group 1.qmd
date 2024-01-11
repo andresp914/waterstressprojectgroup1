@@ -89,8 +89,9 @@ datab$Week1 <- as.factor(datab$Week)
 datab$Soil_humidity <-  as.numeric(datab$Soil_humidity)
 datab$Species[datab$Species=="Amaranthus retroflexus "] <- "Amaranthus retroflexus" 
 datab$Species[datab$Species=="Beta vulgaris "] <- "Beta vulgaris"
-datab$Use[datab$Species=="Chenopodium album"] <- "wild" 
-datab$Chlorophyll_content[datab$Chlorophyll_content=="211.4"] <- "21.4"
+datab$Use[datab$Species=="Chenopodium album"] <- "wild"
+datab$Use[datab$Species=="Amaranthus retroflexus"] <- "wild"
+datab$Chlorophyll_content[datab$Chlorophyll_content=="211.4"] <- 21.4
 
 #add variable of water content to the table
 datab$Aerial_Water_Content <- (datab$Aerial_fresh_weight - datab$Aerial_dry_weight) 
@@ -491,7 +492,6 @@ stress.pca.plot <- autoplot(data.pca,
                           data = pcadata,
                           colour = 'Species')
 stress.pca.plot
-
 ```
 
 
