@@ -1,0 +1,14 @@
+```{r}
+library(gsheet)
+library(writexl)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(agricolae)
+
+data <- "https://docs.google.com/spreadsheets/d/19amOGkUFZHRlk2mefK32tzMIG26ZXDYswd-8w_XKKTc/edit#gid=0"
+datahl <- gsheet2tbl(data)
+
+
+```
+
