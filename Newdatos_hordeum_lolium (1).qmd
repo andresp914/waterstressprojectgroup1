@@ -1,0 +1,415 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r}
+library(gsheet)
+library(writexl)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(agricolae)
+
+data <- "https://docs.google.com/spreadsheets/d/19amOGkUFZHRlk2mefK32tzMIG26ZXDYswd-8w_XKKTc/edit#gid=0"
+datahl <- gsheet2tbl(data)
+
+datahl$Aerial_fresh_weight <- as.numeric(datahl$Aerial_fresh_weight)
+datahl$Aerial_dry_weight <- as.numeric(datahl$Aerial_dry_weight)
+datahl$Roots_fresh_weight <- as.numeric(datahl$Roots_fresh_weight)
+```
+
+Plant height
+
+check @fig-phw (naming chunk to check the figure in text)
+
+```{r fig-phw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the wild species under three different water stress conditions.")
+variable <- "Plant_height"
+variablename <- "Plant height cm"
+source("hl-rmd/lineplot.R")
+g
+```
+
+check @fig-phc (naming chunk to check the figure in text)
+
+Soil humidity
+
+```{r fig-shc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the cultivated species under three different water stress conditions.")
+variable <- "Soil_humidity"
+variablename <- "Soil humidity"
+source("hl-rmd/lineplot.R")
+g
+```
+
+Leaf Number
+
+```{r fig-lnc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablename ," of the cultivated species under three different water stress conditions.")
+variable <- "Leaf_number"
+variablename <- "Leaf number"
+source("hl-rmd/lineplot.R")
+g
+```
+
+Chlorophyll content
+
+```{r fig-ccw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
+variables <- "Chlorophyll_content"
+variablesname <- "Chlorophyll content (SPAD units)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Aerial fresh weight
+
+```{r fig-afww, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
+variables <- "Aerial_fresh_weight"
+variablesname <- "Aerial fresh weight (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Aerial dry weight
+
+```{r fig-adwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Aerial_dry_weight"
+variablesname <- "Aerial dry weight (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Root length
+
+```{r fig-rlw, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
+variables <- "Root_length"
+variablesname <- "Root length (cm)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+```{r fig-rlc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Root_length"
+variablesname <- "Root length (cm)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Root Weight
+
+```{r fig-rfwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Roots_fresh_weight"
+variablesname <- "Roots fresh weight (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Roots dry weight
+
+```{r fig-rdww, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the wild species under three different water stress conditions.")
+variables <- "Roots_dry_weight"
+variablesname <- "Roots dry weight (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+```{r fig-rdwc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Roots_dry_weight"
+variablesname <- "Roots dry weight (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Aerial water content
+
+```{r fig-awcc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Aerial_water_content"
+variablesname <- "Aerial Water Content (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+Root water content
+
+```{r fig-rwcc, echo=TRUE, message=FALSE, warning=FALSE}
+#| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
+variables <- "Roots_water_content"
+variablesname <- "Root Water Content (g)"
+source("hl-rmd/boxplot.R")
+b
+```
+
+## Statistical analysis - One-way ANOVA.
+
+#\`\``{r, echo=TRUE, message=FALSE, warning=FALSE} #| tbl-cap: !expr paste("Table 1. List of p-values obtained from one-way ANOVA for 15 species of cultivated and wild plants. Significant differences are highlighted in bold.") p.value.ph <- numeric() l <- levels(as.factor(datahl$Species)) for(i in l) {   d <- datahl[datahl$Species==i,]   d <- d[!is.na(d$Week),]   model.aov <-      aov(Plant_height ~ Treatment * Week) #+                        #Error(Species/Week),data=d)   s <- summary(model.aov)   p.value.ph <- c(p.value.ph,                    s[[1]][[1]]$`Pr(\>F)\`\[1\])
+}
+
+p.value.ln \<- numeric() l \<- levels(as.factor(datahl\$Species))
+
+for(i in l) { d \<- datahl\[datahl$Species==i,] d <- d[!is.na(d$Week),\]
+model.aov \<- aov(Leaf_number \~ Treatment \* Week +
+Error(Species/(Treatment\*Week)),data=d) s2 \<- summary(model.aov)
+p.value.ln \<- c(p.value.ln, s2\[\[1\]\]\[\[1\]\]\$`Pr(>F)`\[1\]) }
+
+list.pvalues \<- data.frame(l,p.value.ph,p.value.ln) list.pvalues %\>%
+kbl() %\>% column_spec(2, bold =
+ifelse(list.pvalues$p.value.ph < 0.05, TRUE, FALSE)) %>% column_spec(3, bold = ifelse(list.pvalues$p.value.ln
+\< 0.05, TRUE, FALSE)) %\>% kable_styling()
+
+```         
+
+## Statistical analysis - Two-way ANOVA for repeated variables.
+
+#```{r, echo=TRUE, message=FALSE, warning=FALSE}
+#| tbl-cap: !expr paste("Table 2. List of p-values obtained from two-way ANOVA for repeated variables for 15 species of cultivated and wild plants. Significant differences are highlighted in bold.")
+
+# The following code was created for calculating the one way ANOVA for the variables that were measured just once. A table was created with all the p values for each species for each variable.
+
+d <- datahl %>%
+  filter(!is.na(Chlorophyll_content),Week=="W6") %>%
+  filter(!is.na(Aerial_fresh_weight),Week=="W6") %>%
+  filter(!is.na(Aerial_dry_weight),Week=="W6") %>%
+  filter(!is.na(Roots_fresh_weight),Week=="W6") %>%
+  filter(!is.na(Roots_dry_weight),Week=="W6") %>%
+  filter(!is.na(Root_length),Week=="W6")
+
+p.value.cc <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Chlorophyll_content~d1$Treatment,data=d1)
+  s3 <- summary(model.aov)
+  p.value.cc <- c(p.value.cc, 
+                  s3[[1]][["Pr(>F)"]][1])
+}
+
+p.value.afw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Aerial_fresh_weight~d1$Treatment,data=d1)
+  s4 <- summary(model.aov)
+  p.value.afw <- c(p.value.afw, 
+                  s4[[1]][["Pr(>F)"]][1])
+}
+
+p.value.adw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Aerial_dry_weight~d1$Treatment,data=d1)
+  s5 <- summary(model.aov)
+  p.value.adw <- c(p.value.adw, 
+                   s5[[1]][["Pr(>F)"]][1])
+}
+
+p.value.rfw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Roots_fresh_weight~d1$Treatment,data=d1)
+  s6 <- summary(model.aov)
+  p.value.rfw <- c(p.value.rfw, 
+                   s6[[1]][["Pr(>F)"]][1])
+}
+
+p.value.rdw <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Roots_dry_weight~d1$Treatment,data=d1)
+  s7 <- summary(model.aov)
+  p.value.rdw <- c(p.value.rdw, 
+                   s7[[1]][["Pr(>F)"]][1])
+}
+
+p.value.rl <- numeric()
+l <- levels(as.factor(d$Species))
+for(i in l) {
+  d1 <- d[d$Species==i,]
+  model.aov <- 
+    aov(formula=d1$Root_length~d1$Treatment,data=d1)
+  s8 <- summary(model.aov)
+  p.value.rl <- c(p.value.rl, 
+                   s8[[1]][["Pr(>F)"]][1])
+}
+
+list.pvalues1 <- data.frame(l,p.value.cc,p.value.afw,p.value.adw,p.value.rfw,p.value.rdw,p.value.rl)
+
+list.pvalues1 %>%
+  kbl() %>%
+  column_spec(2, bold = ifelse(list.pvalues1$p.value.cc < 0.05, TRUE, FALSE)) %>%
+  column_spec(3, bold = ifelse(list.pvalues1$p.value.afw < 0.05, TRUE, FALSE)) %>%
+  column_spec(4, bold = ifelse(list.pvalues1$p.value.adw < 0.05, TRUE, FALSE)) %>%
+  column_spec(5, bold = ifelse(list.pvalues1$p.value.rfw < 0.05, TRUE, FALSE)) %>%
+  column_spec(6, bold = ifelse(list.pvalues1$p.value.rdw < 0.05, TRUE, FALSE)) %>%
+  column_spec(7, bold = ifelse(list.pvalues1$p.value.rl < 0.05, TRUE, FALSE)) %>%
+  kable_styling()
+```
+
+### Statistical analysis - Principal Components Analysis (PCA).
+
+```{r}
+#install.packages("ggcorrplot")
+#install.packages("FactoMineR")
+#install.packages("factoextra")
+#install.packages("ggfortify")
+#install.packages("kableExtra")
+library("FactoMineR")
+library("factoextra")
+library("ggfortify")
+library("kableExtra")
+library("ggcorrplot")
+
+datahl <- datahl[ which(datahl$Week=='6'), ] #creates subset table with variables for week 6 to make PCA
+#create two variables for the water content for aerial and root
+pcadata <- datahl[c(4:14)]
+
+#show data
+str(pcadata)
+#check for empty values
+colSums(is.na(pcadata))
+#ATM only aerial water content and root water content are available for the PCA-------------DATA SHOULD BE FIXED!!
+#fixing data
+pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
+str(pcadata)
+#Normalizing data
+numerical_data <- pcadata[1:11]
+head(numerical_data)
+data_normalized <- scale(numerical_data)#scale fuction applied
+head(data_normalized)
+
+corr_matrix <- cor(numerical_data)
+ggcorrplot(corr_matrix,
+           colors = c("pink", "purple","darkred"))
+#displays a correlation matrix
+data.pca <- princomp(corr_matrix)
+data.pca <- princomp(data_normalized)
+summary(data.pca)
+
+data.pca$loadings[, 1:2]
+
+
+fviz_cos2(data.pca, choice = "var", axes = 1:2)
+pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
+            gradient.cols = c("darkred", "purple", "pink"),
+            repel = TRUE)
+pca2
+#error The number of active individuals is different from the length of the factor habillage. Please, remove the supplementary individuals in the variable habillage.
+pcadata <- datahl[c(1,4:14)]
+pcafinal <- fviz_pca_biplot(data.pca,
+                            label="var",
+                            habillage = pcadata$Species,
+                            addEllipses=TRUE,
+                            ellipse.level=0.95,
+                            repel = TRUE)
+pcafinal
+
+#PCA per treatment
+pcadata <- datahl[c(1,2,4:14)]
+pcafinal2 <- fviz_pca_biplot(data.pca,
+                            label="var",
+                            habillage = pcadata$Treatment,
+                            addEllipses=TRUE,
+                            ellipse.level=0.95,
+                            repel = TRUE,
+                        )
+pcafinal2
+
+#for-loop per species
+#for (Species in unique(datahl$Species)) {
+#cat("Processing PCA for species:", species, "\n")
+
+# Subset data for the current species
+#pcadata <- datahl[datahl$Species == species, c(4:14)]
+
+# Compute correlation matrix
+#corr_matrix <- cor(numerical_data)
+#ggcorrplot(corr_matrix, colors = c("pink", "purple", "darkred"))
+
+# Principal Components Analysis
+#data.pca <- princomp(data_normalized)
+#summary(data.pca)
+
+# Generate PCA biplot for the current species
+#pca_biplot <- fviz_pca_biplot(data.pca, label = "var", habillage = pcadata$Species, 
+ #                               addEllipses = TRUE, #ellipse.level = 0.95, repel = TRUE)
+  
+# Display PCA biplot for the current species
+#cat("PCA biplot for", species, ":\n")
+#print(pca_biplot)
+
+#pca_biplot
+
+# PCAs per treatment and species
+# tabla Lolium rigidum
+#dataLr <- datahl[c(1,2,4:14)]
+#datahl <- datahl[ which(datahl$Species=='Lolium rigidum'), ]
+#dataLr <- datahl[c(2,4:14)]
+# tabla Hordeum vulgare
+#pcadataHv <- datahl[c(1,2,4:14)]
+#pcadataHv <- pcadataHv[ which(pcadataHv$Species=='Hordeum vulgare'), ]
+  # Lolium rigidum
+
+
+
+#pcafinal4 <- fviz_pca_biplot(dataLr,
+      #                      label="var",
+     #                       habillage = dataLr$Treatment,
+    #                        addEllipses=TRUE,
+   #                         ellipse.level=0.95,
+  #                          repel = TRUE,
+ #                       )
+#pcafinal4
+#Hordeum vulgare
+#pcadata2 <- pcadata[ which(pcadata$Species=='Hordeum vulgare'), ]
+#pcafinal5 <- fviz_pca_biplot(data.pca,
+ #                           label="var",
+  #                          habillage = pcadata2$Treatment,
+   #                         addEllipses=TRUE,
+    #                        ellipse.level=0.95,
+     #                       repel = TRUE,
+      #                  )
+#pcafinal5
+#pca dots IN PROGRESS NOT WORKING
+# structure of the iris
+# dataset
+#str(pcadata)
+
+# print the data.pca dataset
+#head(pcadata)
+#data.pca <- prcomp(pcadata[,c(5:10)],
+ #                  center = TRUE,
+  #                 scale. = TRUE)
+
+# summary of the
+# prcomp object
+#summary(data.pca)
+
+# structure of the pca object
+#str(data.pca)
+#plotting pca
+
+#stress.pca.plot <- autoplot(data.pca,
+ #                         data = pcadata,
+  #                        colour = 'Species')
+#stress.pca.plot
+```
+
+\`\`\`
