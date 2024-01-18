@@ -1,0 +1,129 @@
+```{r}
+library(gsheet)
+library(writexl)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(agricolae)
+
+data <- "https://docs.google.com/spreadsheets/d/19amOGkUFZHRlk2mefK32tzMIG26ZXDYswd-8w_XKKTc/edit#gid=0"
+datahl <- gsheet2tbl(data)
+
+l <- datahl %>% 
+  filter(Species=="Lolium rigidum",Week=="6")
+
+alln <- aov(formula=l$Leaf_number~l$Treatment)
+summary(alln)
+hsdlln <- agricolae::HSD.test(alln, trt="l$Treatment")
+hsdlln
+
+alph <- aov(formula=l$Plant_height~l$Treatment)
+summary(alph)
+hsdlph <- agricolae::HSD.test(alph, trt="l$Treatment")
+hsdlph
+
+alsh <- aov(formula=l$Soil_humidity~l$Treatment)
+summary(alsh)
+hsdlsh <- agricolae::HSD.test(alsh, trt="l$Treatment")
+hsdlsh
+
+alcc <- aov(formula=l$Chlorophyll_content~l$Treatment)
+summary(alcc)
+hsdlcc <- agricolae::HSD.test(alcc, trt="l$Treatment")
+hsdlcc
+
+alrl <- aov(formula=l$Root_length~l$Treatment)
+summary(alrl)
+hsdlrl <- agricolae::HSD.test(alrl, trt="l$Treatment")
+hsdlrl
+
+alrfw <- aov(formula=l$Roots_fresh_weight~l$Treatment)
+summary(alrfw)
+hsdlrfw <- agricolae::HSD.test(alrfw, trt="l$Treatment")
+hsdlrfw
+
+alafw <- aov(formula=l$Aerial_fresh_weight~l$Treatment)
+summary(alafw)
+hsdlafw <- agricolae::HSD.test(alafw, trt="l$Treatment")
+hsdlafw
+
+alrdw <- aov(formula=l$Roots_dry_weight~l$Treatment)
+summary(alrdw)
+hsdlrdw <- agricolae::HSD.test(alrdw, trt="l$Treatment")
+hsdlrdw
+
+aladw <- aov(formula=l$Aerial_dry_weight~l$Treatment)
+summary(aladw)
+hsdladw <- agricolae::HSD.test(aladw, trt="l$Treatment")
+hsdladw
+
+alrwc <- aov(formula=l$Roots_water_content~l$Treatment)
+summary(alrwc)
+hsdlrwc <- agricolae::HSD.test(alrwc, trt="l$Treatment")
+hsdlrwc
+
+alawc <- aov(formula=l$Aerial_water_content~l$Treatment)
+summary(alawc)
+hsdlawc <- agricolae::HSD.test(alawc, trt="l$Treatment")
+hsdlawc
+```
+
+```{r}
+h <- datahl %>% 
+  filter(Species=="Hordeum vulgare",Week=="6")
+
+ahln <- aov(formula=h$Leaf_number~h$Treatment)
+summary(ahln)
+hsdhln <- agricolae::HSD.test(ahln, trt="h$Treatment")
+hsdhln
+
+ahph <- aov(formula=h$Plant_height~h$Treatment)
+summary(ahph)
+hsdhph <- agricolae::HSD.test(ahph, trt="h$Treatment")
+hsdhph
+
+ahsh <- aov(formula=h$Soil_humidity~h$Treatment)
+summary(ahsh)
+hsdhsh <- agricolae::HSD.test(ahsh, trt="h$Treatment")
+hsdhsh
+
+ahcc <- aov(formula=h$Chlorophyll_content~h$Treatment)
+summary(ahcc)
+hsdhcc <- agricolae::HSD.test(ahcc, trt="h$Treatment")
+hsdhcc
+
+ahrl <- aov(formula=h$Root_length~h$Treatment)
+summary(ahrl)
+hsdhrl <- agricolae::HSD.test(ahrl, trt="h$Treatment")
+hsdhrl
+
+ahrfw <- aov(formula=h$Roots_fresh_weight~h$Treatment)
+summary(ahrfw)
+hsdhrfw <- agricolae::HSD.test(ahrfw, trt="h$Treatment")
+hsdhrfw
+
+ahafw <- aov(formula=h$Aerial_fresh.weight~h$Treatment)
+summary(ahafw)
+hsdhafw <- agricolae::HSD.test(ahafw, trt="h$Treatment")
+hsdhafw
+
+ahrdw <- aov(formula=h$Roots_dry_weight~h$Treatment)
+summary(ahrdw)
+hsdhrdw <- agricolae::HSD.test(ahrdw, trt="h$Treatment")
+hsdhrdw
+
+ahadw <- aov(formula=h$Aerial_dry_weight~h$Treatment)
+summary(ahadw)
+hsdhadw <- agricolae::HSD.test(ahadw, trt="h$Treatment")
+hsdhadw
+
+ahrwc <- aov(formula=h$Roots_water_content~h$Treatment)
+summary(ahrwc)
+hsdhrwc <- agricolae::HSD.test(ahrwc, trt="h$Treatment")
+hsdhrwc
+
+ahawc <- aov(formula=h$Aerial_water_content~h$Treatment)
+summary(ahawc)
+hsdhawc <- agricolae::HSD.test(ahawc, trt="h$Treatment")
+hsdhawc
+```
