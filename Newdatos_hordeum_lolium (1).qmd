@@ -278,7 +278,7 @@ library("kableExtra")
 library("ggcorrplot")
 
 datahl <- datahl[ which(datahl$Week=='6'), ] #creates subset table with variables for week 6 to make PCA
-#create two variables for the water content for aerial and root
+##all code silenced to prioritize pca for each species with no errors
 # pcadata <- datahl[c(4:14)]
 # 
 # #show data
