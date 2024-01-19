@@ -279,58 +279,58 @@ library("ggcorrplot")
 
 datahl <- datahl[ which(datahl$Week=='6'), ] #creates subset table with variables for week 6 to make PCA
 #create two variables for the water content for aerial and root
-pcadata <- datahl[c(4:14)]
+# pcadata <- datahl[c(4:14)]
+# 
+# #show data
+# str(pcadata)
+# #check for empty values
+# colSums(is.na(pcadata))
+# #ATM only aerial water content and root water content are available for the PCA-------------DATA SHOULD BE FIXED!!
+# #fixing data
+# pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
+# str(pcadata)
+# #Normalizing data
+# numerical_data <- pcadata[1:11]
+# head(numerical_data)
+# data_normalized <- scale(numerical_data)#scale fuction applied
+# head(data_normalized)
+# 
+# corr_matrix <- cor(numerical_data)
+# ggcorrplot(corr_matrix,
+#            colors = c("pink", "purple","darkred"))
+# #displays a correlation matrix
+# data.pca <- princomp(corr_matrix)
+# data.pca <- princomp(data_normalized)
+# summary(data.pca)
+# 
+# data.pca$loadings[, 1:2]
+# 
 
-#show data
-str(pcadata)
-#check for empty values
-colSums(is.na(pcadata))
-#ATM only aerial water content and root water content are available for the PCA-------------DATA SHOULD BE FIXED!!
-#fixing data
-pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
-str(pcadata)
-#Normalizing data
-numerical_data <- pcadata[1:11]
-head(numerical_data)
-data_normalized <- scale(numerical_data)#scale fuction applied
-head(data_normalized)
-
-corr_matrix <- cor(numerical_data)
-ggcorrplot(corr_matrix,
-           colors = c("pink", "purple","darkred"))
-#displays a correlation matrix
-data.pca <- princomp(corr_matrix)
-data.pca <- princomp(data_normalized)
-summary(data.pca)
-
-data.pca$loadings[, 1:2]
-
-
-fviz_cos2(data.pca, choice = "var", axes = 1:2)
-pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
-            gradient.cols = c("darkred", "purple", "pink"),
-            repel = TRUE)
-pca2
+#fviz_cos2(data.pca, choice = "var", axes = 1:2)
+#pca2 <- fviz_pca_var(data.pca, col.var = "cos2",
+         #   gradient.cols = c("darkred", "purple", "pink"),
+          #  repel = TRUE)
+#pca2
 #error The number of active individuals is different from the length of the factor habillage. Please, remove the supplementary individuals in the variable habillage.
-pcadata <- datahl[c(1,4:14)]
-pcafinal <- fviz_pca_biplot(data.pca,
-                            label="var",
-                            habillage = pcadata$Species,
-                            addEllipses=TRUE,
-                            ellipse.level=0.95,
-                            repel = TRUE)
-pcafinal
+#pcadatasp <- datahl[c(1,4:14)]
+#pcaspecies <- fviz_pca_biplot(data.pca,
+ #                           label="var",
+  #                          habillage = pcadatasp$Species,
+   #                         addEllipses=TRUE,
+    #                        ellipse.level=0.95,
+     #                       repel = TRUE)
+#pcaspecies
 
 #PCA per treatment
-pcadata <- datahl[c(1,2,4:14)]
-pcafinal2 <- fviz_pca_biplot(data.pca,
-                            label="var",
-                            habillage = pcadata$Treatment,
-                            addEllipses=TRUE,
-                            ellipse.level=0.95,
-                            repel = TRUE,
-                        )
-pcafinal2
+#pcadata <- datahl[c(1,2,4:14)]
+#pcafinal2 <- fviz_pca_biplot(data.pca,
+                            # label="var",
+                            # habillage = pcadata$Treatment,
+                            # addEllipses=TRUE,
+                            # ellipse.level=0.95,
+                            # repel = TRUE,
+                        # )
+#pcafinal2
 
 #for-loop per species
 #for (Species in unique(datahl$Species)) {
@@ -359,16 +359,13 @@ pcafinal2
 
 # PCAs per treatment and species
 # tabla Lolium rigidum
-datahl <- datahl[ which(datahl$Species=='Lolium rigidum'), ]
-dataLr <- datahl[c(1,2,4:14)]
-dataLr <- datahl[c(2,4:14)]
+dataLr <- datahl[ which(datahl$Species=='Lolium rigidum'), ]
+dataLr <- dataLr[c(2,4:14)]
 # tabla Hordeum vulgare
-datahl <- datahl[ which(datahl$Species=='Hordeum vulgare'), ]
-dataHv <- datahl[c(1,2,4:14)]
-dataHv <- datahl[c(2,4:14)]
+dataHv <- datahl[ which(datahl$Species=='Hordeum vulgare'), ]
+dataHv <- dataHv[c(2,4:14)]
 
   # Lolium rigidum
-
 pcadata <- dataLr
 
 #show data
@@ -380,7 +377,7 @@ colSums(is.na(pcadata))
 pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
 str(pcadata)
 #Normalizing data
-numerical_data <- pcadata[1:11]
+numerical_data <- pcadata[2:11]
 head(numerical_data)
 data_normalized <- scale(numerical_data)#scale fuction applied
 head(data_normalized)
@@ -397,15 +394,49 @@ data.pca$loadings[, 1:2]
 
 data.pca$Treatment
 
-pcafinal4 <- fviz_pca_biplot(data.pca,
+pcaLr <- fviz_pca_biplot(data.pca,
                           label="var",
                             habillage = pcadata$Treatment,
                             addEllipses=TRUE,
                             ellipse.level=0.95,
                             repel = TRUE,)
-pcafinal4
-#Hordeum vulgare
-#pcadata <- dataHv
+pcaLr 
+ # Hordeum vulgare
+pcadata <- dataHv
+
+#show data
+str(pcadata)
+#check for empty values
+colSums(is.na(pcadata))
+#ATM only aerial water content and root water content are available for the PCA-------------DATA SHOULD BE FIXED!!
+#fixing data
+pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
+str(pcadata)
+#Normalizing data
+numerical_data <- pcadata[2:11]
+head(numerical_data)
+data_normalized <- scale(numerical_data)#scale fuction applied
+head(data_normalized)
+
+corr_matrix <- cor(numerical_data)
+ggcorrplot(corr_matrix,
+           colors = c("pink", "purple","darkred"))
+#displays a correlation matrix
+data.pca <- princomp(corr_matrix)
+data.pca <- princomp(data_normalized)
+summary(data.pca)
+
+data.pca$loadings[, 1:2]
+
+data.pca$Treatment
+
+pcaHv <- fviz_pca_biplot(data.pca,
+                          label="var",
+                            habillage = pcadata$Treatment,
+                            addEllipses=TRUE,
+                            ellipse.level=0.95,
+                            repel = TRUE,)
+pcaHv
 
 #show data
 #str(pcadata)
