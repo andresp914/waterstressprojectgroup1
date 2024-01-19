@@ -377,7 +377,7 @@ colSums(is.na(pcadata))
 pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
 str(pcadata)
 #Normalizing data
-numerical_data <- pcadata[2:11]
+numerical_data <- pcadata[2:12]
 head(numerical_data)
 data_normalized <- scale(numerical_data)#scale fuction applied
 head(data_normalized)
@@ -413,7 +413,7 @@ colSums(is.na(pcadata))
 pcadata <- replace(pcadata, is.na(pcadata), 0) #change NA to 0
 str(pcadata)
 #Normalizing data
-numerical_data <- pcadata[2:11]
+numerical_data <- pcadata[2:12]
 head(numerical_data)
 data_normalized <- scale(numerical_data)#scale fuction applied
 head(data_normalized)
