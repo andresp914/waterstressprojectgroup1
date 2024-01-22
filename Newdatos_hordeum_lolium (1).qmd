@@ -134,8 +134,8 @@ Aerial water content
 
 ```{r fig-awcc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
-variables <- "Aerial_water_content"
-variablesname <- "Aerial Water Content (g)"
+variables <- "Aerial_fresh_dry_ratio"
+variablesname <- "Aerial Dry/Fresh Weight Ratio (g)"
 source("hl-rmd/boxplot.R")
 b
 ```
@@ -144,8 +144,8 @@ Root water content
 
 ```{r fig-rwcc, echo=TRUE, message=FALSE, warning=FALSE}
 #| fig-cap: !expr paste("Mean", variablesname, "of the cultivated species under three different water stress conditions.")
-variables <- "Roots_water_content"
-variablesname <- "Root Water Content (g)"
+variables <- "Roots_fresh_dry_ratio"
+variablesname <- "Root Dry/Fresh Weight Ratio (g)"
 source("hl-rmd/boxplot.R")
 b
 ```
